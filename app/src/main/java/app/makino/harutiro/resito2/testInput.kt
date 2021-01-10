@@ -25,7 +25,7 @@ class testInput : AppCompatActivity() {
             homePage.putExtra("nedan",nedanId.text)
             homePage.putExtra("sihu",sihuId.text)
 
-            startActivity(homePage)
+            startActivityForResult(homePage,0)
             finish()
 
         }

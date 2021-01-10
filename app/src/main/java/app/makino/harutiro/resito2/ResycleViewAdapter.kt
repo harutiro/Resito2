@@ -47,7 +47,12 @@ class RecyclerViewAdapter(private val context: Context):
         notifyDataSetChanged()
     }
 
-
+    //編集したデータの受け取り。
+    fun setList(list: MutableList<OkaneListDateResycle>){
+        items.clear()
+        items.addAll(list)
+        notifyDataSetChanged()
+    }
 
     //リストの要素数を返すメソッド
     override fun getItemCount(): Int {
