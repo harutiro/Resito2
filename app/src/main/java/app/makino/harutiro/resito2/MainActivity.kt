@@ -23,13 +23,13 @@ class MainActivity : AppCompatActivity() {
         val inputButton = findViewById<Button>(R.id.inputButtonId)
         val kousinButton = findViewById<Button>(R.id.kousinButton)
 
-
+        //テスト入力画面にintent
         inputButton.setOnClickListener {
             val inputPage = Intent(this,testInput::class.java)
             startActivityForResult(inputPage,1)
             finish()
         }
-
+        //初期データのところ
         nedanDateView = mutableListOf(
             OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ"),
             OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ"),
@@ -37,8 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         )
 
-
+        //アダプターのインスタンス作成？
         adapter = RecyclerViewAdapter(this)
+        //リサイクラービューの設定
         recycleView.layoutManager = LinearLayoutManager(this)
         recycleView.adapter = adapter
 
@@ -55,15 +56,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
+        //送られてきた、データを受け取るところ。
         val hizukeNaiyou = intent?.getStringExtra("hizuke") ?:"何も入ってない"
         val nedanNaiyou = intent?.getStringExtra("nedan")?.toInt() ?:0
         val saihuNaiyou = intent?.getStringExtra("sihu") ?:"何も入ってない"
 
+        //送られてきたデータを配列に梱包するところ。
         nedanDateView.add(0,OkaneListDateResycle(hizukeNaiyou,nedanNaiyou,R.drawable.image1,R.drawable.image1,saihuNaiyou))
-
+        //詰めたデータをアダプターに発送するところ
         adapter?.setList(nedanDateView)
-
+        //デバッグ用
         println("出力！！")
         println(nedanDateView.size)
 
