@@ -5,5 +5,5 @@ class OkaneListDateResycle (
     val nedan:Int = 0,
     val saihuIcon:Int = 0,
     val zyanruIcon:Int = 0,
-    val saihu:Int = 0
+    val saihu:String = "error"
         )

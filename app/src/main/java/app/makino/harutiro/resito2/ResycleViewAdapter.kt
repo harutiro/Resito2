@@ -47,6 +47,8 @@ class RecyclerViewAdapter(private val context: Context):
         notifyDataSetChanged()
     }
 
+
+
     //リストの要素数を返すメソッド
     override fun getItemCount(): Int {
 
