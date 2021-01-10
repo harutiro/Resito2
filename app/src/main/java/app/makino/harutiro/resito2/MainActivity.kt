@@ -1,6 +1,8 @@
 package app.makino.harutiro.resito2
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -22,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.resycleView)
         val inputButton = findViewById<Button>(R.id.inputButtonId)
         val kousinButton = findViewById<Button>(R.id.kousinButton)
+
+        kousinButton.setOnClickListener {
+            onResume()
+        }
 
         //テスト入力画面にintent
         inputButton.setOnClickListener {
