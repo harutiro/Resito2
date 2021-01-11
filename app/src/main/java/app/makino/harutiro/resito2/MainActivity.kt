@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.realm.Realm
+import io.realm.RealmObject
+import io.realm.RealmResults
 
 class MainActivity : AppCompatActivity() {
     //値段データ配列の保存場所
@@ -62,13 +65,29 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        //送られてきた、データを受け取るところ。
-        val hizukeNaiyou = intent?.getStringExtra("hizuke") ?:"何も入ってない"
-        val nedanNaiyou = intent?.getStringExtra("nedan")?.toInt() ?:0
-        val saihuNaiyou = intent?.getStringExtra("sihu") ?:"何も入ってない"
 
-        //送られてきたデータを配列に梱包するところ。
-        nedanDateView.add(0,OkaneListDateResycle(hizukeNaiyou,nedanNaiyou,R.drawable.image1,R.drawable.image1,saihuNaiyou))
+
+        //realmのインスタンス
+        val realm: Realm = Realm.getDefaultInstance()
+
+        //realm.where(DBのクラス::class.java).findAll().sort(フィールド名)
+        //.findAll()は全検索。
+        //.sort(フィールド名)はソート。
+        val persons = realm.where(OkaneListDateSaveRealm::class.java).findAll()
+
+        for (person in persons) {
+            val hizukeRealm: String = person?.hizuke ?: "eror"
+            val nedanRealm = person?.nedan ?: 0
+            val saihuRealm = person?.saihu ?: "eror"
+
+            //送られてきたデータを配列に梱包するところ。
+            nedanDateView.add(OkaneListDateResycle(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm))
+        }
+        println("===============================")
+        println()
+
+
+
         //詰めたデータをアダプターに発送するところ
         adapter?.setList(nedanDateView)
         //デバッグ用

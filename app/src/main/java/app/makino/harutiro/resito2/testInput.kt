@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.widget.Button
 import android.widget.EditText
+import io.realm.Realm
+import io.realm.RealmResults
+import java.util.*
 
 class testInput : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,14 +25,32 @@ class testInput : AppCompatActivity() {
             //intentの作成
             val homePage = Intent(this,MainActivity::class.java)
 
+            /*
             //データを送るものを作成
             homePage.putExtra("hizuke",hizukeId.text)
             homePage.putExtra("nedan",nedanId.text)
             homePage.putExtra("sihu",sihuId.text)
 
+             */
+
             //intent開始
-            startActivityForResult(homePage,0)
+            startActivity(homePage)
             finish()
+
+
+
+            //realmに送る
+            val realm = Realm.getDefaultInstance()
+            val persons: RealmResults<OkaneListDateSaveRealm> = realm.where(OkaneListDateSaveRealm::class.java).findAll()
+
+            realm.executeTransaction{
+                val new= it.createObject(OkaneListDateSaveRealm::class.java, UUID.randomUUID().toString())
+                new.hizuke = hizukeId.text.toString()
+                new.nedan = Integer.parseInt(nedanId.text.toString())
+                new.saihu = sihuId.text.toString()
+            }
+            println("===============================")
+            println("更新完了")
 
         }
 

@@ -6,6 +6,9 @@ import io.realm.Realm
 
 class RealmDousa {
 
+
+
+    /*
     //Realmの変数を宣言
     val realm :Realm = Realm.getDefaultInstance()
 
@@ -80,4 +83,6 @@ class RealmDousa {
 
         }
     }
+
+     */
 }
