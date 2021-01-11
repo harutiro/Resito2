@@ -32,13 +32,7 @@ class MainActivity : AppCompatActivity() {
             val inputPage = Intent(this,testInput::class.java)
             startActivityForResult(inputPage,1)
         }
-        //初期データのところ
-        nedanDateView = mutableListOf(
-            OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ"),
-            OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ"),
-            OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ")
 
-        )
 
         //アダプターのインスタンス作成？
         adapter = RecyclerViewAdapter(this)
@@ -59,6 +53,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        nedanDateView.clear()
+
+        //初期データのところ
+        nedanDateView = mutableListOf(
+                OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ"),
+                OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ"),
+                OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ")
+
+        )
 
 
         //realmのインスタンス
