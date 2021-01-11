@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
+import app.makino.harutiro.resito2.input.inputPageNedan
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         //テスト入力画面にintent
         inputButton.setOnClickListener {
-            val inputPage = Intent(this,testInput::class.java)
+            val inputPage = Intent(this,inputPageNedan::class.java)
             startActivityForResult(inputPage,1)
         }
 
