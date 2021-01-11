@@ -3,26 +3,31 @@ package app.makino.harutiro.resito2
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.webkit.DateSorter
 import android.widget.Button
 import android.widget.EditText
+import androidx.annotation.RequiresApi
 import io.realm.Realm
 import io.realm.RealmResults
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 class testInput : AppCompatActivity() {
 
     var nedanId:EditText? = null
+    var hizukeId:EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_input)
 
         //findViewById
-        val hizukeId = findViewById<EditText>(R.id.inHizukeId)
+        hizukeId = findViewById<EditText>(R.id.inHizukeId)
         nedanId = findViewById<EditText>(R.id.inNedanId)
         val sihuId = findViewById<EditText>(R.id.inSihuId)
         val saveButtonId = findViewById<Button>(R.id.saveButton)
@@ -39,7 +44,11 @@ class testInput : AppCompatActivity() {
 
             realm.executeTransaction{
                 val new= it.createObject(OkaneListDateSaveRealm::class.java, UUID.randomUUID().toString())
-                new.hizuke = hizukeId.text.toString()
+
+                val hizukeCopy = hizukeId
+                if(hizukeCopy != null) {
+                    new.hizuke = hizukeCopy.text.toString()
+                }
 
                 val nedanCopy = nedanId
                 if (nedanCopy != null){
@@ -58,6 +67,7 @@ class testInput : AppCompatActivity() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
 
@@ -69,8 +79,12 @@ class testInput : AppCompatActivity() {
         //　　　データ型（"ラベル名",代入するデータ）
         val nedanItiziDate: Int = DateStore.getInt("nedanItiziDate",0)
 
-
         nedanId?.setText(nedanItiziDate.toString())
+
+
+        val dateAndtime: LocalDate = LocalDate.now()
+
+        hizukeId?.setText(dateAndtime.toString())
 
 
 

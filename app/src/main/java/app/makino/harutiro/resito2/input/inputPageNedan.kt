@@ -69,7 +69,7 @@ class inputPageNedan : AppCompatActivity() {
         val intent = findViewById<Button>(R.id.intentButton)
 
         intent.setOnClickListener {
-
+            //計算途中かどうか判断
             if(totalNumber == 0.0) {
                 totalNumber += firstNumber
             }
