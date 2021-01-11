@@ -21,15 +21,13 @@ class inputPageNedan : AppCompatActivity() {
     var secondNumber = 0.0
     var totalNumber = 0.0
     var operator = "empty"
-    var i = 0.0
-    var ataiP = 1.0
-    var ataiR = 1.0
 
     var plusButton :Button? = null
     var minusButton :Button? = null
     var multiplyButton :Button? = null
     var equalButton :Button? = null
     var waruButton :Button? = null
+
     var numberText :TextView? = null
     var numberButton0 :Button? = null
     var numberButton1 :Button? = null
@@ -41,6 +39,8 @@ class inputPageNedan : AppCompatActivity() {
     var numberButton7 :Button? = null
     var numberButton8 :Button? = null
     var numberButton9 :Button? = null
+
+    var clearBotton :Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,11 +64,15 @@ class inputPageNedan : AppCompatActivity() {
         numberButton8 = findViewById<Button>(R.id.numberButton8)
         numberButton9 = findViewById<Button>(R.id.numberButton9)
 
+        clearBotton = findViewById(R.id.clearBotton)
+
         val intent = findViewById<Button>(R.id.intentButton)
 
         intent.setOnClickListener {
 
-            totalNumber += firstNumber
+            if(totalNumber == 0.0) {
+                totalNumber += firstNumber
+            }
 
             //インスタンスを作る
             //ファイル操作のモード　Context.MODE_PRIVATE・Context.MODE_MULTI_PROCESS
@@ -91,11 +95,12 @@ class inputPageNedan : AppCompatActivity() {
 
 
 
-        plusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
-        minusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
-        multiplyButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
-        equalButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
+        plusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150, 150, 150))
+        minusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150, 150, 150))
+        multiplyButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150, 150, 150))
         waruButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150, 150, 150))
+        equalButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
+
 
 
         plusButton?.isEnabled = false
@@ -225,38 +230,6 @@ class inputPageNedan : AppCompatActivity() {
                 totalNumber = firstNumber * secondNumber
             }else if (operator == "waru"){
                 totalNumber = firstNumber / secondNumber
-            }else if (operator == "r"){
-
-                i = firstNumber
-                while (i > 0) {
-                    totalNumber *= i
-                    i--
-                }
-
-            }else if (operator =="npr"){
-                i = secondNumber
-                while (i > 0) {
-                    totalNumber = totalNumber * firstNumber
-                    firstNumber--
-                    i--
-                }
-            }else if (operator == "ncr"){
-
-                i = secondNumber
-                while (i > 0) {
-                    ataiP = ataiP * firstNumber
-                    firstNumber--
-                    i--
-                }
-
-
-                i = secondNumber
-                while (i > 0) {
-                    ataiR = ataiR * i
-                    i--
-                }
-
-                totalNumber = ataiP / ataiR
             }
 
             plusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
@@ -265,18 +238,42 @@ class inputPageNedan : AppCompatActivity() {
             equalButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
             waruButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
 
-            firstNumber = 0.0
+            firstNumber = totalNumber
             secondNumber = 0.0
-            ataiP = 1.0
-            ataiR = 1.0
             operator = "empty"
             numberText?.text = totalNumber.toString()
+
+            plusButton?.isEnabled = true
+            minusButton?.isEnabled = true
+            multiplyButton?.isEnabled = true
+            equalButton?.isEnabled = true
+            waruButton?.isEnabled = true
+
+        }
+
+        //C,botton
+        clearBotton?.setOnClickListener {
+            plusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
+            minusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
+            multiplyButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
+            equalButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
+            waruButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
+
+
+            firstNumber = 0.0
+            secondNumber = 0.0
+            totalNumber = 0.0
+
+            operator = "empty"
+
+            numberText?.text = firstNumber.toString()
 
             plusButton?.isEnabled = false
             minusButton?.isEnabled = false
             multiplyButton?.isEnabled = false
             equalButton?.isEnabled = false
             waruButton?.isEnabled = false
+
 
         }
 
@@ -295,10 +292,11 @@ class inputPageNedan : AppCompatActivity() {
 
             numberText?.text = firstNumber.toString()
 
-            plusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(240, 240, 240))
-            minusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(240, 240, 240))
-            multiplyButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(240, 240, 240))
-            waruButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(240, 240, 240))
+            plusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150, 150, 150))
+            minusButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150, 150, 150))
+            multiplyButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150, 150, 150))
+            waruButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150, 150, 150))
+            equalButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150,150,150))
 
 
             plusButton?.isEnabled = true
@@ -314,7 +312,7 @@ class inputPageNedan : AppCompatActivity() {
 
             numberText?.text = secondNumber.toString()
 
-            equalButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(240, 240, 240))
+            equalButton?.backgroundTintList = ColorStateList.valueOf(Color.rgb(150, 150, 150))
 
             equalButton?.isEnabled = true
 
