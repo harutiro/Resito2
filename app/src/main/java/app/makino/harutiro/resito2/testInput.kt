@@ -22,20 +22,8 @@ class testInput : AppCompatActivity() {
         val saveButtonId = findViewById<Button>(R.id.saveButton)
 
         saveButtonId.setOnClickListener {
-            //intentの作成
-            val homePage = Intent(this,MainActivity::class.java)
 
-            /*
-            //データを送るものを作成
-            homePage.putExtra("hizuke",hizukeId.text)
-            homePage.putExtra("nedan",nedanId.text)
-            homePage.putExtra("sihu",sihuId.text)
 
-             */
-
-            //intent開始
-            startActivity(homePage)
-            finish()
 
 
 
@@ -51,6 +39,9 @@ class testInput : AppCompatActivity() {
             }
             println("===============================")
             println("更新完了")
+
+            //intent開始
+            finish()
 
         }
 

@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         inputButton.setOnClickListener {
             val inputPage = Intent(this,testInput::class.java)
             startActivityForResult(inputPage,1)
-            finish()
         }
         //初期データのところ
         nedanDateView = mutableListOf(
