@@ -19,6 +19,7 @@ import java.util.*
 
 class testInput : AppCompatActivity() {
 
+    //オンレジューム用
     var nedanId:EditText? = null
     var hizukeId:EditText? = null
 
@@ -43,13 +44,16 @@ class testInput : AppCompatActivity() {
             val persons: RealmResults<OkaneListDateSaveRealm> = realm.where(OkaneListDateSaveRealm::class.java).findAll()
 
             realm.executeTransaction{
+                //梱包するためのダンボールを作る（インスタンス作成）
                 val new= it.createObject(OkaneListDateSaveRealm::class.java, UUID.randomUUID().toString())
 
+                //null対策でコピーを作りぬるチェックを行う
                 val hizukeCopy = hizukeId
                 if(hizukeCopy != null) {
                     new.hizuke = hizukeCopy.text.toString()
                 }
 
+                //null対策でコピーを作りぬるチェックを行う
                 val nedanCopy = nedanId
                 if (nedanCopy != null){
                     new.nedan = Integer.parseInt(nedanCopy.text.toString())
@@ -78,12 +82,12 @@ class testInput : AppCompatActivity() {
 
         //　　　データ型（"ラベル名",代入するデータ）
         val nedanItiziDate: Int = DateStore.getInt("nedanItiziDate",0)
-
+        //値段データセット
         nedanId?.setText(nedanItiziDate.toString())
 
-
+        //時間取得
         val dateAndtime: LocalDate = LocalDate.now()
-
+        //時間データセット
         hizukeId?.setText(dateAndtime.toString())
 
 
