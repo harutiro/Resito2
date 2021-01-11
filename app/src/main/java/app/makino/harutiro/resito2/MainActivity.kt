@@ -13,9 +13,8 @@ import io.realm.RealmResults
 
 class MainActivity : AppCompatActivity() {
     //値段データ配列の保存場所
-    companion object{
-        var nedanDateView:MutableList<OkaneListDateResycle> = mutableListOf()
-    }
+    var nedanDateView:MutableList<OkaneListDateResycle> = mutableListOf()
+
     //アダプターインスタンスの保存
     var adapter: RecyclerViewAdapter? = null
 
@@ -26,11 +25,7 @@ class MainActivity : AppCompatActivity() {
         //findviewByIdの保存場所
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.resycleView)
         val inputButton = findViewById<Button>(R.id.inputButtonId)
-        val kousinButton = findViewById<Button>(R.id.kousinButton)
 
-        kousinButton.setOnClickListener {
-            onResume()
-        }
 
         //テスト入力画面にintent
         inputButton.setOnClickListener {
