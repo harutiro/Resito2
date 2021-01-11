@@ -19,7 +19,7 @@ class inputPageNedan : AppCompatActivity() {
 
     var firstNumber = 0.0
     var secondNumber = 0.0
-    var totalNumber = 1.0
+    var totalNumber = 0.0
     var operator = "empty"
     var i = 0.0
     var ataiP = 1.0
