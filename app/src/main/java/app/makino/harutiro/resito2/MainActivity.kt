@@ -36,13 +36,13 @@ class MainActivity : AppCompatActivity() {
 
 
         //アダプターのインスタンス作成？
-        adapter = RecyclerViewAdapter(this,object: MyListAdapter.OnItemClickListner{
-            override fun onItemClick(item: SaveData) {
+        adapter = RecyclerViewAdapter(this,object: RecyclerViewAdapter.OnItemClickListner{
+            override fun onItemClick(item: OkaneListDateResycle) {
                 // SecondActivityに遷移するためのIntent
-                val intent = Intent(applicationContext, SecondActivity::class.java)
+                val intent = Intent(applicationContext, testInput::class.java)
                 // RecyclerViewの要素をタップするとintentによりSecondActivityに遷移する
                 // また，要素のidをSecondActivityに渡す
-                intent.putExtra("id", item.id)
+                intent.putExtra("id", item.Id)
                 startActivity(intent)
             }
         })
@@ -90,8 +90,10 @@ class MainActivity : AppCompatActivity() {
             val nedanRealm = person?.nedan ?: 0
             val saihuRealm = person?.saihu ?: "eror"
 
+            val Id = person?.Id ?:""
+
             //送られてきたデータを配列に梱包するところ。
-            nedanDateView.add(OkaneListDateResycle(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm))
+            nedanDateView.add(OkaneListDateResycle(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm,Id))
         }
         println("===============================")
         println()

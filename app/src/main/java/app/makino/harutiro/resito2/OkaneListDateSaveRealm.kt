@@ -13,7 +13,6 @@ open class OkaneListDateSaveRealm ( //メモのクラスを定義 //openを書�
     open var saihuIcon:Int = 0,
     open var zyanruIcon:Int = 0,
     open var saihu:String = "",
-    //open var nedanDateView:MutableList<OkaneListDateResycle> = mutableListOf()
 
 
 ): RealmObject() //RealmObjectという方を継承している部分 メモというクラスをRealmで保存できる型にすることができる

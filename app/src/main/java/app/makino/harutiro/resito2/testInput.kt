@@ -10,6 +10,7 @@ import android.text.Editable
 import android.webkit.DateSorter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import io.realm.Realm
 import io.realm.RealmResults
@@ -23,9 +24,19 @@ class testInput : AppCompatActivity() {
     var nedanId:EditText? = null
     var hizukeId:EditText? = null
 
+    // idをonCreate()とonDestroy()で利用するため
+    var id: String? = null
+
+    private val realm by lazy {
+        Realm.getDefaultInstance()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_input)
+
+        // MainActivityのRecyclerViewの要素をタップした場合はidが，fabをタップした場合は"空白"が入っているはず
+        id = intent.getStringExtra("id")
 
         //findViewById
         hizukeId = findViewById<EditText>(R.id.inHizukeId)
@@ -33,15 +44,36 @@ class testInput : AppCompatActivity() {
         val sihuId = findViewById<EditText>(R.id.inSihuId)
         val saveButtonId = findViewById<Button>(R.id.saveButton)
 
+        if(id == ""){
+            // 新しい要素に重複しないIDを設定するため，ランダムなUUIDを生成
+            id = UUID.randomUUID().toString()
+            realm.executeTransaction {
+                // 生成したIDを設定して新規作成
+                val item = it.createObject(OkaneListDateSaveRealm::class.java, id)
+            }
+
+
+        }else{
+
+            // MainActivityに渡されたidを元にデータを検索して取得
+            val item = realm.where(OkaneListDateSaveRealm::class.java).equalTo("Id", id).findFirst()
+
+            //もしidが間違っていたりして取得に失敗したら以下の「取得したデータをViewに設定する」処理は行わない
+            if(item != null) {
+                findViewById<EditText>(R.id.inHizukeId).setText(item.hizuke)
+                findViewById<EditText>(R.id.inNedanId).setText(item.nedan.toString())
+                findViewById<EditText>(R.id.inSihuId).setText(item.saihu)
+            }
+
+        }
+
+
+
         saveButtonId.setOnClickListener {
 
 
+            /*===============================realmに送る============================*/
 
-
-
-            //realmに送る
-            val realm = Realm.getDefaultInstance()
-            val persons: RealmResults<OkaneListDateSaveRealm> = realm.where(OkaneListDateSaveRealm::class.java).findAll()
 
             realm.executeTransaction{
                 //梱包するためのダンボールを作る（インスタンス作成）
@@ -61,6 +93,7 @@ class testInput : AppCompatActivity() {
 
                 new.saihu = sihuId.text.toString()
             }
+
             println("===============================")
             println("更新完了")
 
@@ -75,22 +108,32 @@ class testInput : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        //インスタンスを作る
-        //ファイル操作のモード　Context.MODE_PRIVATE・Context.MODE_MULTI_PROCESS
-        // getSharedPreferences(”設定データの名前”, ファイル操作のモード)
-        var DateStore: SharedPreferences = getSharedPreferences("DateStore", MODE_PRIVATE)
+        if(id == "") {
 
-        //　　　データ型（"ラベル名",代入するデータ）
-        val nedanItiziDate: Int = DateStore.getInt("nedanItiziDate",0)
-        //値段データセット
-        nedanId?.setText(nedanItiziDate.toString())
+            //インスタンスを作る
+            //ファイル操作のモード　Context.MODE_PRIVATE・Context.MODE_MULTI_PROCESS
+            // getSharedPreferences(”設定データの名前”, ファイル操作のモード)
+            var DateStore: SharedPreferences = getSharedPreferences("DateStore", MODE_PRIVATE)
 
-        //時間取得
-        val dateAndtime: LocalDate = LocalDate.now()
-        //時間データセット
-        hizukeId?.setText(dateAndtime.toString())
+            //　　　データ型（"ラベル名",代入するデータ）
+            val nedanItiziDate: Int = DateStore.getInt("nedanItiziDate", 0)
+            //値段データセット
+            nedanId?.setText(nedanItiziDate.toString())
+
+            //時間取得
+            val dateAndtime: LocalDate = LocalDate.now()
+            //時間データセット
+            hizukeId?.setText(dateAndtime.toString())
+
+        }
 
 
 
+    }
+
+    // Activity終了時にralmを終了
+    override fun onDestroy() {
+        realm.close()
+        super.onDestroy()
     }
 }
