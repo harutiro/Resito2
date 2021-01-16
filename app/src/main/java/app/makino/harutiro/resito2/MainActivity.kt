@@ -92,6 +92,8 @@ class MainActivity : AppCompatActivity() {
 
             val Id = person?.Id ?:""
 
+
+
             //送られてきたデータを配列に梱包するところ。
             nedanDateView.add(OkaneListDateResycle(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm,Id))
         }
