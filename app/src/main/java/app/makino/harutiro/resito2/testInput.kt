@@ -50,15 +50,12 @@ class testInput : AppCompatActivity() {
 
         if(id.isNullOrEmpty()){
 
-            println("来た！！")
+
             sinki = true
 
             // 新しい要素に重複しないIDを設定するため，ランダムなUUIDを生成
             id = UUID.randomUUID().toString()
-            realm.executeTransaction {
-                // 生成したIDを設定して新規作成
-                val item = it.createObject(OkaneListDateSaveRealm::class.java, id)
-            }
+
 
 
         }else{
@@ -83,23 +80,47 @@ class testInput : AppCompatActivity() {
             /*===============================realmに送る============================*/
 
 
-            realm.executeTransaction{
-                //梱包するためのダンボールを作る（インスタンス作成）
-                val new= it.createObject(OkaneListDateSaveRealm::class.java, UUID.randomUUID().toString())
+            if(sinki == true){
 
-                //null対策でコピーを作りぬるチェックを行う
-                val hizukeCopy = hizukeId
-                if(hizukeCopy != null) {
-                    new.hizuke = hizukeCopy.text.toString()
+                realm.executeTransaction {
+                    //梱包するためのダンボールを作る（インスタンス作成）
+                    val new = it.createObject(OkaneListDateSaveRealm::class.java, UUID.randomUUID().toString())
+
+                    //null対策でコピーを作りぬるチェックを行う
+                    val hizukeCopy = hizukeId
+                    if (hizukeCopy != null) {
+                        new?.hizuke = hizukeCopy.text.toString()
+                    }
+
+                    //null対策でコピーを作りぬるチェックを行う
+                    val nedanCopy = nedanId
+                    if (nedanCopy != null) {
+                        new?.nedan = Integer.parseInt(nedanCopy.text.toString())
+                    }
+
+                    new?.saihu = sihuId.text.toString()
                 }
 
-                //null対策でコピーを作りぬるチェックを行う
-                val nedanCopy = nedanId
-                if (nedanCopy != null){
-                    new.nedan = Integer.parseInt(nedanCopy.text.toString())
-                }
+            }else {
 
-                new.saihu = sihuId.text.toString()
+                realm.executeTransaction {
+                    //梱包するためのダンボールを作る（インスタンス作成）
+                    val new = realm.where(OkaneListDateSaveRealm::class.java).equalTo("Id", id).findFirst()
+
+                    //null対策でコピーを作りぬるチェックを行う
+                    val hizukeCopy = hizukeId
+                    if (hizukeCopy != null) {
+                        new?.hizuke = hizukeCopy.text.toString()
+                    }
+
+                    //null対策でコピーを作りぬるチェックを行う
+                    val nedanCopy = nedanId
+                    if (nedanCopy != null) {
+                        new?.nedan = Integer.parseInt(nedanCopy.text.toString())
+                    }
+
+                    new?.saihu = sihuId.text.toString()
+                }
             }
 
             println("===============================")
