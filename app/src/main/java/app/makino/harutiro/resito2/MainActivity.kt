@@ -12,6 +12,7 @@ import app.makino.harutiro.resito2.input.inputPageNedan
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.RealmResults
+import io.realm.Sort
 
 class MainActivity : AppCompatActivity() {
     //値段データ配列の保存場所
@@ -101,9 +102,9 @@ class MainActivity : AppCompatActivity() {
         val persons: RealmResults<OkaneListDateSaveRealm>
 
         if(allViewMode){
-            persons = realm.where(OkaneListDateSaveRealm::class.java).findAll()
+            persons = realm.where(OkaneListDateSaveRealm::class.java).sort("hizuke", Sort.DESCENDING).findAll()
         }else{
-            persons = realm.where(OkaneListDateSaveRealm::class.java).equalTo("akaibu",allViewMode).findAll()
+            persons = realm.where(OkaneListDateSaveRealm::class.java).sort("hizuke",Sort.DESCENDING).equalTo("akaibu",allViewMode).findAll()
         }
 
 
