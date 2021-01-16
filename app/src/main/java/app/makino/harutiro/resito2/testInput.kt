@@ -49,12 +49,32 @@ class testInput : AppCompatActivity() {
         val sihuId = findViewById<EditText>(R.id.inSihuId)
         val saveButtonId = findViewById<Button>(R.id.saveButton)
         val akaibuSwitch = findViewById<Switch>(R.id.akaibuSwichId)
+        val dellButton = findViewById<Button>(R.id.delButton)
 
 
         akaibuSwitch.setOnCheckedChangeListener{componundButton,isChecked ->
 
             akaibu = isChecked
 
+        }
+
+        dellButton.setOnClickListener {
+            val persons = realm.where(OkaneListDateSaveRealm::class.java).equalTo("Id", id).findAll()
+
+            //読み込んだデータを一時配列に入れる
+            var personArray = mutableListOf<OkaneListDateSaveRealm>()
+            for(person in persons){
+                personArray.add(person)
+            }
+
+            //配列に入ったデータを消す
+            realm.executeTransaction {
+                for (person in persons){
+                    person.deleteFromRealm()
+                }
+            }
+
+            finish()
         }
 
 
