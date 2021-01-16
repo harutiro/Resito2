@@ -36,7 +36,18 @@ class MainActivity : AppCompatActivity() {
 
 
         //アダプターのインスタンス作成？
-        adapter = RecyclerViewAdapter(this)
+        adapter = RecyclerViewAdapter(this,object: MyListAdapter.OnItemClickListner{
+            override fun onItemClick(item: SaveData) {
+                // SecondActivityに遷移するためのIntent
+                val intent = Intent(applicationContext, SecondActivity::class.java)
+                // RecyclerViewの要素をタップするとintentによりSecondActivityに遷移する
+                // また，要素のidをSecondActivityに渡す
+                intent.putExtra("id", item.id)
+                startActivity(intent)
+            }
+        })
+
+
         //リサイクラービューの設定
         recycleView.layoutManager = LinearLayoutManager(this)
         recycleView.adapter = adapter

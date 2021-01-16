@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewAdapter(private val context: Context):
+class RecyclerViewAdapter(private val context: Context,private val listener: OnItemClickListner):
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     //リサイクラービューに表示するリストを宣言する
@@ -16,6 +17,9 @@ class RecyclerViewAdapter(private val context: Context):
 
     //データをcourseDateと結びつける？？
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
+
+        val container: ConstraintLayout = view.findViewById(R.id.container)
+
         val saihuIconImage: ImageView = view.findViewById(R.id.saihuIconId)
         val zyanruIconImage: ImageView = view.findViewById(R.id.zyanruIconId)
         val hizukeText: TextView = view.findViewById(R.id.hizukeId)
@@ -32,6 +36,10 @@ class RecyclerViewAdapter(private val context: Context):
     //itemsのposition番目の要素をviewに表示するコード
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
+
+        // MainActivity側でタップしたときの動作を記述するため，n番目の要素を渡す
+        holder.container.setOnClickListener { listener.onItemClick(item) }
+
         holder.saihuIconImage.setImageResource(item.saihuIcon)
         holder.zyanruIconImage.setImageResource(item.zyanruIcon)
         holder.hizukeText.text = item.hizuke
@@ -58,5 +66,10 @@ class RecyclerViewAdapter(private val context: Context):
     override fun getItemCount(): Int {
 
         return items.size
+    }
+
+    // RecyclerViewの要素をタップするためのもの
+    interface OnItemClickListner{
+        fun onItemClick(item: OkaneListDateResycle)
     }
 }
