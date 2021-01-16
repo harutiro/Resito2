@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Switch
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.makino.harutiro.resito2.input.inputPageNedan
 import io.realm.Realm
@@ -19,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     //アダプターインスタンスの保存
     var adapter: RecyclerViewAdapter? = null
 
+    //Allモードにするか保存
+    var allViewMode = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,7 +30,15 @@ class MainActivity : AppCompatActivity() {
         //findviewByIdの保存場所
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.resycleView)
         val inputButton = findViewById<Button>(R.id.inputButtonId)
+        val AllView = findViewById<Switch>(R.id.AllSwitchId)
 
+
+        //表示の状態管理
+        AllView.setOnCheckedChangeListener { buttonView, isChecked ->
+            allViewMode = isChecked
+            onResume()
+
+        }
 
         //テスト入力画面にintent
         inputButton.setOnClickListener {
@@ -63,18 +75,20 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    /*＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝表示する中身の配列作り＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝*/
     override fun onResume() {
         super.onResume()
 
         nedanDateView.clear()
 
         //初期データのところ
-        nedanDateView = mutableListOf(
-                OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ"),
-                OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ"),
-                OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ")
-
-        )
+//        nedanDateView = mutableListOf(
+//                OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ",false),
+//                OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ",false),
+//                OkaneListDateResycle("20xx-aa-bb",1,R.drawable.image1,R.drawable.image2,"サイフ",false)
+//
+//        )
 
 
         //realmのインスタンス
@@ -83,19 +97,28 @@ class MainActivity : AppCompatActivity() {
         //realm.where(DBのクラス::class.java).findAll().sort(フィールド名)
         //.findAll()は全検索。
         //.sort(フィールド名)はソート。
-        val persons = realm.where(OkaneListDateSaveRealm::class.java).findAll()
+
+        val persons: RealmResults<OkaneListDateSaveRealm>
+
+        if(allViewMode){
+            persons = realm.where(OkaneListDateSaveRealm::class.java).findAll()
+        }else{
+            persons = realm.where(OkaneListDateSaveRealm::class.java).equalTo("akaibu",allViewMode).findAll()
+        }
+
 
         for (person in persons) {
             val hizukeRealm: String = person?.hizuke ?: "eror"
             val nedanRealm = person?.nedan ?: 0
             val saihuRealm = person?.saihu ?: "eror"
+            val akaibuRealm = person?.akaibu ?:false
 
             val Id = person?.Id ?:""
 
 
 
             //送られてきたデータを配列に梱包するところ。
-            nedanDateView.add(OkaneListDateResycle(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm,Id))
+            nedanDateView.add(OkaneListDateResycle(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm,akaibuRealm,Id))
         }
         println("===============================")
         println()

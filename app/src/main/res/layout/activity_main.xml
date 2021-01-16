@@ -7,15 +7,26 @@
     android:background="#F1F8E9"
     tools:context=".MainActivity">
 
+    <Switch
+        android:id="@+id/AllSwitchId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="全表示"
+        app:layout_constraintBottom_toTopOf="@+id/resycleView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/inputButtonId"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/inputButtonId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="入力"
         app:layout_constraintBottom_toTopOf="@+id/resycleView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/AllSwitchId"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.506" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/resycleView"

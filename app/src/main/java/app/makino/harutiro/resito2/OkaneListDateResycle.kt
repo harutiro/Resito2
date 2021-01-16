@@ -9,5 +9,6 @@ class OkaneListDateResycle (
         val saihuIcon:Int = 0,
         val zyanruIcon:Int = 0,
         val saihu:String = "error",
+        val akaibu:Boolean = true,
         val Id: String = UUID.randomUUID().toString()
         )
