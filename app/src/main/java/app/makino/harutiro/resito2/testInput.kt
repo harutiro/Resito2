@@ -31,6 +31,8 @@ class testInput : AppCompatActivity() {
         Realm.getDefaultInstance()
     }
 
+    var sinki = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_input)
@@ -38,13 +40,19 @@ class testInput : AppCompatActivity() {
         // MainActivityのRecyclerViewの要素をタップした場合はidが，fabをタップした場合は"空白"が入っているはず
         id = intent.getStringExtra("id")
 
+        println(id)
+
         //findViewById
         hizukeId = findViewById<EditText>(R.id.inHizukeId)
         nedanId = findViewById<EditText>(R.id.inNedanId)
         val sihuId = findViewById<EditText>(R.id.inSihuId)
         val saveButtonId = findViewById<Button>(R.id.saveButton)
 
-        if(id == ""){
+        if(id.isNullOrEmpty()){
+
+            println("来た！！")
+            sinki = true
+
             // 新しい要素に重複しないIDを設定するため，ランダムなUUIDを生成
             id = UUID.randomUUID().toString()
             realm.executeTransaction {
@@ -108,7 +116,12 @@ class testInput : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if(id == "") {
+        println(sinki)
+
+
+        if(sinki == true) {
+
+            println("来た！！！！")
 
             //インスタンスを作る
             //ファイル操作のモード　Context.MODE_PRIVATE・Context.MODE_MULTI_PROCESS
@@ -125,6 +138,9 @@ class testInput : AppCompatActivity() {
             //時間データセット
             hizukeId?.setText(dateAndtime.toString())
 
+            println(dateAndtime)
+            println(nedanItiziDate)
+
         }
 
 
@@ -135,5 +151,7 @@ class testInput : AppCompatActivity() {
     override fun onDestroy() {
         realm.close()
         super.onDestroy()
+
+        sinki = false
     }
 }

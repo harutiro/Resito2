@@ -90,6 +90,8 @@ class inputPageNedan : AppCompatActivity() {
             startActivityForResult(inputPage,2)
             finish()
 
+            println(totalNumber)
+
         }
 
 
