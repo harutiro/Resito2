@@ -94,4 +94,11 @@ class MainActivity : AppCompatActivity() {
         println(nedanDateView.size)
 
     }
+
+    // Activity終了時にRealmを終了すること
+    override fun onDestroy() {
+        val realm: Realm = Realm.getDefaultInstance()
+        realm.close()
+        super.onDestroy()
+    }
 }
