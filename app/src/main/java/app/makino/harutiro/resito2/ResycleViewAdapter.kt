@@ -44,7 +44,7 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
         holder.zyanruIconImage.setImageResource(item.zyanruIcon)
         holder.hizukeText.text = item.hizuke
         holder.saihuText.text = item.saihu
-        holder.nedanText.text = item.nedan.toString()
+        holder.nedanText.text = item.nedan.toString() + "￥"
 
         println(item.saihu)
 
