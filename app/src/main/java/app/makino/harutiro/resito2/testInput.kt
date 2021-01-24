@@ -1,22 +1,15 @@
 package app.makino.harutiro.resito2
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.webkit.DateSorter
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Switch
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
-import io.realm.RealmResults
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
 class testInput : AppCompatActivity() {
@@ -52,7 +45,7 @@ class testInput : AppCompatActivity() {
         val dellButton = findViewById<Button>(R.id.delButton)
 
 
-        akaibuSwitch.setOnCheckedChangeListener{componundButton,isChecked ->
+        akaibuSwitch.setOnCheckedChangeListener{ componundButton, isChecked ->
 
             akaibu = isChecked
 
@@ -91,7 +84,7 @@ class testInput : AppCompatActivity() {
 
 
             //インテントしてきたデータを受け取る場所
-            val nedanItiziDate = intent.getIntExtra("nedanItiziDate",0)
+            val nedanItiziDate = intent.getIntExtra("nedanItiziDate", 0)
             println(nedanItiziDate)
             //値段データセット
             nedanId?.setText(nedanItiziDate.toString())
@@ -186,5 +179,22 @@ class testInput : AppCompatActivity() {
         super.onDestroy()
 
         sinki = false
+
+    }
+
+    //戻るボタンの処理
+    override fun onBackPressed() {
+        // 行いたい処理
+        AlertDialog.Builder(this) // FragmentではActivityを取得して生成
+                .setTitle("注意")
+                .setMessage("入力したデータを保存しないでホームに戻りますか？")
+                .setPositiveButton("OK") { dialog, which ->
+                    //Yesが押された時の挙動
+                    finish()
+                }
+                .setNeutralButton("Cancel") { dialog, which ->
+                    //その他が押された時の挙動
+                }
+                .show()
     }
 }
