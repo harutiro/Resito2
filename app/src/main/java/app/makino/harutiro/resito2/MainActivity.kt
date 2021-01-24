@@ -14,7 +14,7 @@ import io.realm.Sort
 
 class MainActivity : AppCompatActivity() {
     //値段データ配列の保存場所
-    var nedanDateView:MutableList<OkaneListDateResycle> = mutableListOf()
+    var nedanDateView:MutableList<OkaneListDateSaveRealm> = mutableListOf()
 
     //アダプターインスタンスの保存
     var adapter: RecyclerViewAdapter? = null
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         //アダプターのインスタンス作成？
         adapter = RecyclerViewAdapter(this,object: RecyclerViewAdapter.OnItemClickListner{
-            override fun onItemClick(item: OkaneListDateResycle) {
+            override fun onItemClick(item: OkaneListDateSaveRealm) {
                 // SecondActivityに遷移するためのIntent
                 val intent = Intent(applicationContext, testInput::class.java)
                 // RecyclerViewの要素をタップするとintentによりSecondActivityに遷移する
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
 
 
             //送られてきたデータを配列に梱包するところ。
-            nedanDateView.add(OkaneListDateResycle(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm,akaibuRealm,Id))
+            nedanDateView.add(OkaneListDateSaveRealm(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm,akaibuRealm,Id))
         }
         println("===============================")
         println()

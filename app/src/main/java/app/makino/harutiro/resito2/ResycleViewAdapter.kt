@@ -13,7 +13,7 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
 
     //リサイクラービューに表示するリストを宣言する
-    val items: MutableList<OkaneListDateResycle> = mutableListOf()
+    val items: MutableList<OkaneListDateSaveRealm> = mutableListOf()
 
     //データをcourseDateと結びつける？？
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -52,13 +52,13 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
     }
 
     //引数にとったリストをadapterに追加するメソッド
-    fun addAll(items: List<OkaneListDateResycle>){
+    fun addAll(items: List<OkaneListDateSaveRealm>){
         this.items.addAll(items)
         notifyDataSetChanged()
     }
 
     //編集したデータの受け取り。
-    fun setList(list: MutableList<OkaneListDateResycle>){
+    fun setList(list: MutableList<OkaneListDateSaveRealm>){
         items.clear()
         items.addAll(list)
         notifyDataSetChanged()
@@ -72,6 +72,6 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
 
     // RecyclerViewの要素をタップするためのもの
     interface OnItemClickListner{
-        fun onItemClick(item: OkaneListDateResycle)
+        fun onItemClick(item: OkaneListDateSaveRealm)
     }
 }
