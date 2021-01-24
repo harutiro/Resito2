@@ -23,10 +23,16 @@ class testInput : AppCompatActivity() {
     private val realm by lazy {
         Realm.getDefaultInstance()
     }
+
     //新規かどうか判断
     var sinki = false
     //アーカイブ状態
     var akaibu = false
+
+    //findViewを外で使うところ
+    var hizukeId:EditText? = null
+    var nedanId:EditText? = null
+    var sihuId:EditText? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,9 +45,9 @@ class testInput : AppCompatActivity() {
         println(id)
 
         //findViewById
-        val hizukeId = findViewById<EditText>(R.id.inHizukeId)
-        val nedanId = findViewById<EditText>(R.id.inNedanId)
-        val sihuId = findViewById<EditText>(R.id.inSihuId)
+        hizukeId = findViewById<EditText>(R.id.inHizukeId)
+        nedanId = findViewById<EditText>(R.id.inNedanId)
+        sihuId = findViewById<EditText>(R.id.inSihuId)
         val saveButtonId = findViewById<Button>(R.id.saveButton)
         val akaibuSwitch = findViewById<Switch>(R.id.akaibuSwichId)
         val dellButton = findViewById<Button>(R.id.delButton)
@@ -123,32 +129,37 @@ class testInput : AppCompatActivity() {
 
         saveButtonId.setOnClickListener {
 
-            realm.executeTransaction {
-
-                val new :OkaneListDateSaveRealm? = if(sinki){
-                    realm.createObject(OkaneListDateSaveRealm::class.java, UUID.randomUUID().toString())
-
-                }else {
-                    realm.where(OkaneListDateSaveRealm::class.java).equalTo("Id", id).findFirst()
-
-                }
-
-
-                new?.hizuke = hizukeId.text.toString()
-
-                new?.nedan = Integer.parseInt(nedanId.text.toString())
-
-                new?.saihu = sihuId.text.toString()
-
-                new?.akaibu = akaibu
-            }
-
+            datekanri()
 
             //intent開始
             finish()
 
         }
 
+    }
+
+    //レルムにデータを送る関数
+    fun datekanri(){
+
+        realm.executeTransaction {
+
+            val new :OkaneListDateSaveRealm? = if(sinki){
+                realm.createObject(OkaneListDateSaveRealm::class.java, UUID.randomUUID().toString())
+
+            }else {
+                realm.where(OkaneListDateSaveRealm::class.java).equalTo("Id", id).findFirst()
+
+            }
+
+
+            new?.hizuke = hizukeId?.text.toString()
+
+            new?.nedan = Integer.parseInt(nedanId?.text.toString())
+
+            new?.saihu = sihuId?.text.toString()
+
+            new?.akaibu = akaibu
+        }
     }
 
 
@@ -176,7 +187,8 @@ class testInput : AppCompatActivity() {
                 }
                 .setNeutralButton("保存") { dialog, which ->
                     //その他が押された時の挙動
-
+                    datekanri()
+                    finish()
                 }
                 .show()
     }
