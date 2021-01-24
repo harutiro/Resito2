@@ -123,47 +123,24 @@ class testInput : AppCompatActivity() {
 
         saveButtonId.setOnClickListener {
 
+            realm.executeTransaction {
 
+                val new :OkaneListDateSaveRealm? = if(sinki){
+                    realm.createObject(OkaneListDateSaveRealm::class.java, UUID.randomUUID().toString())
 
-
-
-            if(sinki == true){
-
-                realm.executeTransaction {
-                    //梱包するためのダンボールを作る（インスタンス作成）
-                    val new = it.createObject(OkaneListDateSaveRealm::class.java, UUID.randomUUID().toString())
-
-
-
-
-                    new?.hizuke = hizukeId.text.toString()
-
-                    new?.nedan = Integer.parseInt(nedanId.text.toString())
-
-                    new?.saihu = sihuId.text.toString()
-
-                    new?.akaibu = akaibu
-                }
-
-            }else {
-
-                realm.executeTransaction {
-                    //梱包するためのダンボールを作る（インスタンス作成）
-                    val new = realm.where(OkaneListDateSaveRealm::class.java).equalTo("Id", id).findFirst()
-
-
-                    new?.hizuke = hizukeId.text.toString()
-
-                    new?.nedan = Integer.parseInt(nedanId.text.toString())
-
-                    new?.saihu = sihuId.text.toString()
-
-                    new?.akaibu = akaibu
-
-                    println(akaibu)
-
+                }else {
+                    realm.where(OkaneListDateSaveRealm::class.java).equalTo("Id", id).findFirst()
 
                 }
+
+
+                new?.hizuke = hizukeId.text.toString()
+
+                new?.nedan = Integer.parseInt(nedanId.text.toString())
+
+                new?.saihu = sihuId.text.toString()
+
+                new?.akaibu = akaibu
             }
 
 
@@ -194,8 +171,12 @@ class testInput : AppCompatActivity() {
                     //Yesが押された時の挙動
                     finish()
                 }
-                .setNeutralButton("Cancel") { dialog, which ->
+                .setNegativeButton("Cancel") { dialog, which ->
+                    // Noが押された時の挙動
+                }
+                .setNeutralButton("保存") { dialog, which ->
                     //その他が押された時の挙動
+
                 }
                 .show()
     }
