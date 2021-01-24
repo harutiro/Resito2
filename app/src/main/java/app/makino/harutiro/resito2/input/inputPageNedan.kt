@@ -78,7 +78,7 @@ class inputPageNedan : AppCompatActivity() {
 
             //インテント
             val inputPage = Intent(this,testInput::class.java)
-            inputPage.putExtra("nedanItiziDate",totalNumber)
+            inputPage.putExtra("nedanItiziDate",totalNumber.toInt())
             startActivity(inputPage)
             finish()
 
