@@ -1,19 +1,13 @@
 package app.makino.harutiro.resito2.input
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
-import app.makino.harutiro.resito2.testInput
-import com.google.android.material.button.MaterialButtonToggleGroup
-import io.realm.Realm
 
 class inputPageNedan : AppCompatActivity() {
 
@@ -77,7 +71,7 @@ class inputPageNedan : AppCompatActivity() {
 
 
             //インテント
-            val inputPage = Intent(this,testInput::class.java)
+            val inputPage = Intent(this, testInput::class.java)
             inputPage.putExtra("nedanItiziDate",totalNumber.toInt())
             startActivity(inputPage)
             finish()

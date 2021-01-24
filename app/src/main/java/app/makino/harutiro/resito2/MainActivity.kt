@@ -1,16 +1,14 @@
 package app.makino.harutiro.resito2
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Switch
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.makino.harutiro.resito2.input.inputPageNedan
+import app.makino.harutiro.resito2.input.testInput
 import io.realm.Realm
-import io.realm.RealmObject
 import io.realm.RealmResults
 import io.realm.Sort
 

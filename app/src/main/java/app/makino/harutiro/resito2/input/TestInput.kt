@@ -1,4 +1,4 @@
-package app.makino.harutiro.resito2
+package app.makino.harutiro.resito2.input
 
 import android.os.Build
 import android.os.Bundle
@@ -8,6 +8,8 @@ import android.widget.Switch
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import app.makino.harutiro.resito2.OkaneListDateSaveRealm
+import app.makino.harutiro.resito2.R
 import io.realm.Realm
 import java.time.LocalDate
 import java.util.*
