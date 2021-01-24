@@ -3,6 +3,7 @@ package app.makino.harutiro.resito2
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Switch
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         //findviewByIdの保存場所
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.resycleView)
-        val inputButton = findViewById<Button>(R.id.inputButtonId)
         val AllView = findViewById<Switch>(R.id.AllSwitchId)
 
 
@@ -39,11 +39,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        //テスト入力画面にintent
-        inputButton.setOnClickListener {
-            val inputPage = Intent(this,inputPageNedan::class.java)
-            startActivityForResult(inputPage,1)
-        }
 
 
         //アダプターのインスタンス作成？
@@ -67,7 +62,11 @@ class MainActivity : AppCompatActivity() {
         adapter!!.addAll(nedanDateView)
 
 
-
+        //データ作成Intent
+        findViewById<View>(R.id.Fab).setOnClickListener {
+            val inputPage = Intent(this,inputPageNedan::class.java)
+            startActivityForResult(inputPage,1)
+        }
 
 
 
