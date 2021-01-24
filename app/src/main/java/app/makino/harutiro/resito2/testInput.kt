@@ -89,13 +89,10 @@ class testInput : AppCompatActivity() {
             id = UUID.randomUUID().toString()
 
 
-            //インスタンスを作る
-            //ファイル操作のモード　Context.MODE_PRIVATE・Context.MODE_MULTI_PROCESS
-            // getSharedPreferences(”設定データの名前”, ファイル操作のモード)
-            var DateStore: SharedPreferences = getSharedPreferences("DateStore", MODE_PRIVATE)
 
-            //　　　データ型（"ラベル名",代入するデータ）
-            val nedanItiziDate: Int = DateStore.getInt("nedanItiziDate", 0)
+            //インテントしてきたデータを受け取る場所
+            val nedanItiziDate = intent.getIntExtra("nedanItiziDate",0)
+            println(nedanItiziDate)
             //値段データセット
             nedanId?.setText(nedanItiziDate.toString())
 

@@ -74,20 +74,12 @@ class inputPageNedan : AppCompatActivity() {
                 totalNumber += firstNumber
             }
 
-            //インスタンスを作る
-            //ファイル操作のモード　Context.MODE_PRIVATE・Context.MODE_MULTI_PROCESS
-            // getSharedPreferences(”設定データの名前”, ファイル操作のモード)
-            val nedanItiziDate: SharedPreferences = getSharedPreferences("DateStore", Context.MODE_PRIVATE)
-            // editorのオブジェクトを取得
-            val editor = nedanItiziDate.edit()
-            //　　　データ型（"ラベル名",代入するデータ）
-            editor.putInt("nedanItiziDate",totalNumber.toInt())
-            //データの反映
-            editor.apply()
+
 
             //インテント
             val inputPage = Intent(this,testInput::class.java)
-            startActivityForResult(inputPage,2)
+            inputPage.putExtra("nedanItiziDate",totalNumber)
+            startActivity(inputPage)
             finish()
 
             println(totalNumber)
