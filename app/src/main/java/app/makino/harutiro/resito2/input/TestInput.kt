@@ -14,7 +14,7 @@ import io.realm.Realm
 import java.time.LocalDate
 import java.util.*
 
-class testInput : AppCompatActivity() {
+class TestInput : AppCompatActivity() {
 
 
     // idをonCreate()とonDestroy()で利用するため

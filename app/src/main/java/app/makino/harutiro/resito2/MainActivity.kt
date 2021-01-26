@@ -4,11 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.Switch
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.makino.harutiro.resito2.input.inputPageNedan
-import app.makino.harutiro.resito2.input.testInput
+import app.makino.harutiro.resito2.input.TestInput
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         adapter = RecyclerViewAdapter(this,object: RecyclerViewAdapter.OnItemClickListner{
             override fun onItemClick(item: OkaneListDateSaveRealm) {
                 // SecondActivityに遷移するためのIntent
-                val intent = Intent(applicationContext, testInput::class.java)
+                val intent = Intent(applicationContext, TestInput::class.java)
                 // RecyclerViewの要素をタップするとintentによりSecondActivityに遷移する
                 // また，要素のidをSecondActivityに渡す
                 intent.putExtra("id", item.Id)

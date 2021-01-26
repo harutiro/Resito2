@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Resito2">
         <activity android:name=".input.inputPageNedan"></activity>
-        <activity android:name=".input.testInput" />
+        <activity android:name=".input.TestInput" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
