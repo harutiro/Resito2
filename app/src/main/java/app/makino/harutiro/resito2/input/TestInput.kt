@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Switch
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +31,7 @@ class TestInput : AppCompatActivity() {
     var akaibu = false
 
     //findViewを外で使うところ
-    var hizukeId:EditText? = null
+    var hizukeId:TextView? = null
     var nedanId:EditText? = null
     var sihuId:EditText? = null
 
@@ -45,7 +46,7 @@ class TestInput : AppCompatActivity() {
         println(id)
 
         //findViewById
-        hizukeId = findViewById<EditText>(R.id.inHizukeId)
+        hizukeId = findViewById<TextView>(R.id.dayTextView)
         nedanId = findViewById<EditText>(R.id.inNedanId)
         sihuId = findViewById<EditText>(R.id.inSihuId)
         val saveButtonId = findViewById<Button>(R.id.saveButton)
@@ -111,7 +112,7 @@ class TestInput : AppCompatActivity() {
 
             //もしidが間違っていたりして取得に失敗したら以下の「取得したデータをViewに設定する」処理は行わない
             if(item != null) {
-                findViewById<EditText>(R.id.inHizukeId).setText(item.hizuke)
+                findViewById<TextView>(R.id.dayTextView).setText(item.hizuke)
                 findViewById<EditText>(R.id.inNedanId).setText(item.nedan.toString())
                 findViewById<EditText>(R.id.inSihuId).setText(item.saihu)
                 findViewById<Switch>(R.id.akaibuSwichId).isChecked = item.akaibu
