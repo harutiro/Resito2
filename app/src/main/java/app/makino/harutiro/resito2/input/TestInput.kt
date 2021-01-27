@@ -1,14 +1,14 @@
 package app.makino.harutiro.resito2.input
 
+import android.app.DatePickerDialog
+import android.app.Dialog
 import android.os.Build
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Switch
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
 import io.realm.Realm
@@ -137,6 +137,18 @@ class TestInput : AppCompatActivity() {
 
         }
 
+        /*===============================その他の動作=============================*/
+
+        val dayTextView =  findViewById<TextView>(R.id.dayTextView)
+
+        dayTextView.setClickable(true)
+        dayTextView.setOnClickListener {
+
+            DateDialog{ date ->
+                dayTextView.setText(date)
+            }.show(supportFragmentManager,"date_dialog")
+
+        }
     }
 
     //レルムにデータを送る関数
@@ -192,5 +204,21 @@ class TestInput : AppCompatActivity() {
                     finish()
                 }
                 .show()
+    }
+}
+
+class DateDialog(private val onSelected: (String) -> Unit) :
+        DialogFragment(), DatePickerDialog.OnDateSetListener {
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val date = c.get(Calendar.DAY_OF_MONTH)
+        return DatePickerDialog(requireActivity(), this, year, month, date)
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int,
+                           month: Int, dayOfMonth: Int) {
+        onSelected("$year/${month + 1}/$dayOfMonth")
     }
 }
