@@ -13,6 +13,7 @@ import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
 import io.realm.Realm
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class TestInput : AppCompatActivity() {
@@ -100,8 +101,10 @@ class TestInput : AppCompatActivity() {
 
             //時間取得
             val dateAndtime: LocalDate = LocalDate.now()
+            val formatter = DateTimeFormatter.ofPattern("yyyy年 MM月 dd日")
+            val formatted = dateAndtime.format(formatter)
             //時間データセット
-            hizukeId?.setText(dateAndtime.toString())
+            hizukeId?.setText(formatted)
 
 
 
@@ -144,7 +147,7 @@ class TestInput : AppCompatActivity() {
         dayTextView.setClickable(true)
         dayTextView.setOnClickListener {
 
-            DateDialog{ date ->
+            DateDialog(dayTextView.text.toString()){ date ->
                 dayTextView.setText(date)
             }.show(supportFragmentManager,"date_dialog")
 
@@ -207,18 +210,93 @@ class TestInput : AppCompatActivity() {
     }
 }
 
-class DateDialog(private val onSelected: (String) -> Unit) :
+
+
+class DateDialog(val motoDate: String ,private val onSelected: (String) -> Unit) :
         DialogFragment(), DatePickerDialog.OnDateSetListener {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val c = Calendar.getInstance()
-        val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH)
-        val date = c.get(Calendar.DAY_OF_MONTH)
+
+
+        val year = henkan(motoDate).yyyy()
+        val month = henkan(motoDate).mm()
+        val date = henkan(motoDate).dd()
+
+
+
         return DatePickerDialog(requireActivity(), this, year, month, date)
     }
 
     override fun onDateSet(view: DatePicker?, year: Int,
                            month: Int, dayOfMonth: Int) {
-        onSelected("$year/${month + 1}/$dayOfMonth")
+        onSelected("${year}年 ${month + 1}月 ${dayOfMonth}日")
+    }
+}
+
+
+
+class henkan(val motoDate:String){
+
+    fun yyyy(): Int {
+        var charAry = motoDate.toCharArray()
+        var ukeire = ""
+
+        for(ch in charAry){
+
+            when(ch){
+
+                ' '-> ukeire += ""
+                '年'-> break
+                else->ukeire += ch
+
+            }
+
+        }
+
+        return ukeire.toInt()
+    }
+
+    fun mm():Int{
+        var charAry = motoDate.toCharArray()
+        var ukeire = ""
+        var hantei = false
+
+        for (ch in charAry){
+
+            when(ch){
+
+                ' '-> ukeire += ""
+                '年'-> hantei = true
+                '月'-> break
+                else-> if(hantei){
+                    ukeire += ch
+                }
+
+            }
+        }
+
+        return ukeire.toInt()-1
+    }
+
+    fun dd():Int{
+        var charAry = motoDate.toCharArray()
+        var ukeire = ""
+        var hantei = false
+
+        for (ch in charAry){
+
+            when(ch){
+
+                ' '-> ukeire += ""
+                '月'-> hantei = true
+                '日'-> break
+                else-> if(hantei){
+                    ukeire += ch
+                }
+
+            }
+        }
+
+        return ukeire.toInt()
     }
 }
