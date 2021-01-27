@@ -133,6 +133,7 @@ class TestInput : AppCompatActivity() {
 
         saveButtonId.setOnClickListener {
 
+            //レルム入力関数
             datekanri()
 
             //intent開始
@@ -140,25 +141,34 @@ class TestInput : AppCompatActivity() {
 
         }
 
-        /*===============================その他の動作=============================*/
+        /*===============================日にち変更動作=============================*/
+
+
 
         val dayTextView =  findViewById<TextView>(R.id.dayTextView)
 
+        //テキストボックスをタッチ動作対応させる
         dayTextView.setClickable(true)
         dayTextView.setOnClickListener {
 
+            //ダイアログの表示　このとき、テキストボックスの中に入ってるデータをクラスに送る
             DateDialog(dayTextView.text.toString()){ date ->
+
+                //出力結果を反映
                 dayTextView.setText(date)
+
             }.show(supportFragmentManager,"date_dialog")
 
         }
     }
 
+    /*=================================動作まとめ=======================================*/
     //レルムにデータを送る関数
     fun datekanri(){
 
         realm.executeTransaction {
 
+            //新しい要素が作られたかどうか判定
             val new :OkaneListDateSaveRealm? = if(sinki){
                 realm.createObject(OkaneListDateSaveRealm::class.java, UUID.randomUUID().toString())
 
@@ -210,23 +220,26 @@ class TestInput : AppCompatActivity() {
     }
 }
 
+/*===================================クラスまとめ=====================================*/
 
-
+//ダイアログの出力部分
 class DateDialog(val motoDate: String ,private val onSelected: (String) -> Unit) :
         DialogFragment(), DatePickerDialog.OnDateSetListener {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val c = Calendar.getInstance()
 
 
+        //デフォルト設定の設定部分
         val year = henkan(motoDate).yyyy()
         val month = henkan(motoDate).mm()
         val date = henkan(motoDate).dd()
 
 
-
+        //デフォルト設定出力部分
         return DatePickerDialog(requireActivity(), this, year, month, date)
     }
 
+    //帰ってきたデータを送り返すところ
     override fun onDateSet(view: DatePicker?, year: Int,
                            month: Int, dayOfMonth: Int) {
         onSelected("${year}年 ${month + 1}月 ${dayOfMonth}日")
@@ -234,8 +247,10 @@ class DateDialog(val motoDate: String ,private val onSelected: (String) -> Unit)
 }
 
 
-
+//文字データを年、月、日にバラバラにするクラス
 class henkan(val motoDate:String){
+
+    //アルス信号の応用！！
 
     fun yyyy(): Int {
         var charAry = motoDate.toCharArray()
