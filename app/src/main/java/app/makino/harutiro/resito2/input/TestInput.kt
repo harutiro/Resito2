@@ -2,8 +2,12 @@ package app.makino.harutiro.resito2.input
 
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.graphics.BitmapFactory
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
+import android.util.Base64
+import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -44,7 +48,14 @@ class TestInput : AppCompatActivity() {
         // MainActivityのRecyclerViewの要素をタップした場合はidが，fabをタップした場合は"空白"が入っているはず
         id = intent.getStringExtra("id")
 
-        println(id)
+        //レシート画像出力
+        val resitoImage: String? = intent.getStringExtra("resitoImage")
+        if(resitoImage != null) {
+            val decodedByte: ByteArray = Base64.decode(resitoImage, 0)
+            findViewById<ImageView>(R.id.resitoImageView).setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
+        }else{
+            findViewById<ImageView>(R.id.resitoImageView).setVisibility(View.GONE)
+        }
 
         //findViewById
         hizukeId = findViewById<TextView>(R.id.dayTextView)

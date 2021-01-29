@@ -158,6 +158,21 @@ class MainActivity : AppCompatActivity() {
             //データの格納
             val imagebitmap = data?.extras?.get("data") as Bitmap
 
+            //＝＝＝＝＝＝＝＝＝＝＝＝＝＝BASE６４＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+            //エンコード
+            val immagex: Bitmap = imagebitmap
+            val baos = ByteArrayOutputStream()
+            immagex.compress(Bitmap.CompressFormat.PNG, 100, baos)
+            val b: ByteArray = baos.toByteArray()
+            val output = Base64.encodeToString(b, Base64.NO_WRAP)
+
+
+
+            //インテント
+            val inputPage = Intent(this, TestInput::class.java)
+            inputPage.putExtra("resitoImage",output)
+            startActivity(inputPage)
+
 
         }
     }
