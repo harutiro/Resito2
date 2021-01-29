@@ -1,12 +1,17 @@
 package app.makino.harutiro.resito2.input
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.Image
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Base64
+import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -16,11 +21,15 @@ import androidx.fragment.app.DialogFragment
 import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
 import io.realm.Realm
+import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 class TestInput : AppCompatActivity() {
+
+    //インテントの戻るいちを指定
+    val REQUEST_PREVIEW = 1
 
 
     // idをonCreate()とonDestroy()で利用するため
@@ -44,24 +53,22 @@ class TestInput : AppCompatActivity() {
     var sihuId:EditText? = null
     var resitoImageView:ImageView? = null
 
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_input)
 
+        //====================================他の入力画面からの入力======================================
+
         // MainActivityのRecyclerViewの要素をタップした場合はidが，fabをタップした場合は"空白"が入っているはず
         id = intent.getStringExtra("id")
 
         //レシート画像出力
-        resitoImage = intent.getStringExtra("resitoImage").toString()
-        if(resitoImage != null) {
-            val decodedByte: ByteArray = Base64.decode(resitoImage, 0)
-            findViewById<ImageView>(R.id.resitoImageView).setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
-        }else{
-            findViewById<ImageView>(R.id.resitoImageView).setVisibility(View.GONE)
-        }
+        resitoGazou()
 
-        //findViewById
+        //======================================findViewById==========================================
+
         hizukeId = findViewById<TextView>(R.id.dayTextView)
         nedanId = findViewById<EditText>(R.id.inNedanId)
         sihuId = findViewById<EditText>(R.id.inSihuId)
@@ -70,6 +77,10 @@ class TestInput : AppCompatActivity() {
         val akaibuSwitch = findViewById<Switch>(R.id.akaibuSwichId)
         val dellButton = findViewById<Button>(R.id.delButton)
 
+
+
+
+        //=====================================ボタン系の動作=======================================
 
 
         akaibuSwitch.setOnCheckedChangeListener{ componundButton, isChecked ->
@@ -95,6 +106,19 @@ class TestInput : AppCompatActivity() {
             }
 
             finish()
+        }
+
+        findViewById<ImageView>(R.id.resitoImageView).setOnTouchListener { view, event ->
+
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { intent ->
+                    intent.resolveActivity(packageManager)?.also {
+                        startActivityForResult(intent, REQUEST_PREVIEW)
+                    }
+                }
+
+            }
+            true
         }
 
 
@@ -183,6 +207,20 @@ class TestInput : AppCompatActivity() {
     }
 
     /*=================================動作まとめ=======================================*/
+    fun resitoGazou(){
+        if(resitoImage == null) {
+            resitoImage = intent.getStringExtra("resitoImage").toString()
+        }
+
+        if(resitoImage != null) {
+            val decodedByte: ByteArray = Base64.decode(resitoImage, 0)
+            findViewById<ImageView>(R.id.resitoImageView).setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
+        }else{
+
+            findViewById<ImageView>(R.id.resitoImageView).setVisibility(View.GONE)
+        }
+    }
+
     //レルムにデータを送る関数
     fun datekanri(){
 
@@ -240,7 +278,32 @@ class TestInput : AppCompatActivity() {
                 }
                 .show()
     }
+
+    //画像データ受け取り
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        //データを受け取る
+        if (requestCode == REQUEST_PREVIEW && data!=null && resultCode == RESULT_OK){
+            //データの格納
+            val imagebitmap = data?.extras?.get("data") as Bitmap
+
+            //＝＝＝＝＝＝＝＝＝＝＝＝＝＝BASE６４＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+            //エンコード
+            val immagex: Bitmap = imagebitmap
+            val baos = ByteArrayOutputStream()
+            immagex.compress(Bitmap.CompressFormat.PNG, 100, baos)
+            val b: ByteArray = baos.toByteArray()
+            resitoImage = Base64.encodeToString(b, Base64.NO_WRAP)
+
+            resitoGazou()
+
+        }
+    }
+
 }
+
+
 
 /*===================================クラスまとめ=====================================*/
 
