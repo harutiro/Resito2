@@ -1,7 +1,9 @@
 package app.makino.harutiro.resito2
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +28,7 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
         val hizukeText: TextView = view.findViewById(R.id.hizukeId)
         val saihuText: TextView = view.findViewById(R.id.saihuId)
         val nedanText: TextView = view.findViewById(R.id.nedanId)
+        val resitoImageView:ImageView = view.findViewById(R.id.resitoImage)
     }
 
     //はめ込むものを指定
@@ -46,6 +49,10 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
         holder.hizukeText.text = item.hizuke
         holder.saihuText.text = item.saihu
         holder.nedanText.text = item.nedan.toString() + "￥"
+
+
+        val decodedByte: ByteArray = Base64.decode(item.resitoImage, 0)
+        holder.resitoImageView.setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
 
         //アーカイブの色変更
         if(item.akaibu) {

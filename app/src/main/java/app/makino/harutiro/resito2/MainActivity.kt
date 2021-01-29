@@ -130,12 +130,14 @@ class MainActivity : AppCompatActivity() {
             val saihuRealm = person?.saihu ?: "eror"
             val akaibuRealm = person?.akaibu ?:false
 
+            val resitoImage = person?.resitoImage ?:"eror"
+
             val Id = person?.Id ?:""
 
 
 
             //送られてきたデータを配列に梱包するところ。
-            nedanDateView.add(OkaneListDateSaveRealm(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm,akaibuRealm,Id))
+            nedanDateView.add(OkaneListDateSaveRealm(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm,akaibuRealm,Id,resitoImage))
         }
         println("===============================")
         println()

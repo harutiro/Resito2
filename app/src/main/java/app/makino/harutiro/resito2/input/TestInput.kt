@@ -26,6 +26,9 @@ class TestInput : AppCompatActivity() {
     // idをonCreate()とonDestroy()で利用するため
     var id: String? = null
 
+    //レシート画像
+    var resitoImage =""
+
     private val realm by lazy {
         Realm.getDefaultInstance()
     }
@@ -39,6 +42,7 @@ class TestInput : AppCompatActivity() {
     var hizukeId:TextView? = null
     var nedanId:EditText? = null
     var sihuId:EditText? = null
+    var resitoImageView:ImageView? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +53,7 @@ class TestInput : AppCompatActivity() {
         id = intent.getStringExtra("id")
 
         //レシート画像出力
-        val resitoImage: String? = intent.getStringExtra("resitoImage")
+        resitoImage = intent.getStringExtra("resitoImage").toString()
         if(resitoImage != null) {
             val decodedByte: ByteArray = Base64.decode(resitoImage, 0)
             findViewById<ImageView>(R.id.resitoImageView).setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
@@ -61,9 +65,11 @@ class TestInput : AppCompatActivity() {
         hizukeId = findViewById<TextView>(R.id.dayTextView)
         nedanId = findViewById<EditText>(R.id.inNedanId)
         sihuId = findViewById<EditText>(R.id.inSihuId)
+        resitoImageView = findViewById(R.id.resitoImageView)
         val saveButtonId = findViewById<Button>(R.id.saveButton)
         val akaibuSwitch = findViewById<Switch>(R.id.akaibuSwichId)
         val dellButton = findViewById<Button>(R.id.delButton)
+
 
 
         akaibuSwitch.setOnCheckedChangeListener{ componundButton, isChecked ->
@@ -131,6 +137,9 @@ class TestInput : AppCompatActivity() {
                 findViewById<EditText>(R.id.inSihuId).setText(item.saihu)
                 findViewById<Switch>(R.id.akaibuSwichId).isChecked = item.akaibu
 
+                val decodedByte: ByteArray = Base64.decode(item.resitoImage, 0)
+                findViewById<ImageView>(R.id.resitoImageView).setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
+
                 println(item.akaibu)
             }
 
@@ -188,6 +197,8 @@ class TestInput : AppCompatActivity() {
 
             }
 
+            new?.resitoImage = resitoImage
+            println(resitoImage)
 
             new?.hizuke = hizukeId?.text.toString()
 
