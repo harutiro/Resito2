@@ -51,8 +51,12 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
         holder.nedanText.text = item.nedan.toString() + "￥"
 
 
-        val decodedByte: ByteArray = Base64.decode(item.resitoImage, 0)
-        holder.resitoImageView.setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
+        if (item.resitoImage != "") {
+            val decodedByte: ByteArray = Base64.decode(item.resitoImage, 0)
+            holder.resitoImageView.setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
+        }else{
+            holder.resitoImageView.setVisibility(View.GONE)
+        }
 
         //アーカイブの色変更
         if(item.akaibu) {

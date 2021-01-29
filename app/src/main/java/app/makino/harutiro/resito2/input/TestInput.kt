@@ -236,7 +236,6 @@ class TestInput : AppCompatActivity() {
             }
 
             new?.resitoImage = resitoImage
-            println(resitoImage)
 
             new?.hizuke = hizukeId?.text.toString()
 
