@@ -1,9 +1,14 @@
 package app.makino.harutiro.resito2
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Base64
 import android.view.View
+import android.widget.Button
 import android.widget.Switch
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.makino.harutiro.resito2.input.inputPageNedan
@@ -11,8 +16,13 @@ import app.makino.harutiro.resito2.input.TestInput
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
+import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity() {
+
+    //インテントの戻るいちを指定
+    val REQUEST_PREVIEW = 1
+
     //値段データ配列の保存場所
     var nedanDateView:MutableList<OkaneListDateSaveRealm> = mutableListOf()
 
@@ -30,6 +40,16 @@ class MainActivity : AppCompatActivity() {
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.resycleView)
         val AllView = findViewById<Switch>(R.id.AllSwitchId)
 
+
+        //カメラ写真入力
+        findViewById<View>(R.id.fabCamera).setOnClickListener {
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { intent ->
+                intent.resolveActivity(packageManager)?.also {
+                    startActivityForResult(intent, REQUEST_PREVIEW)
+                }
+            }
+
+        }
 
         //表示の状態管理
         AllView.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -128,6 +148,18 @@ class MainActivity : AppCompatActivity() {
         println("出力！！")
         println(nedanDateView.size)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        //データを受け取る
+        if (requestCode == REQUEST_PREVIEW && data!=null && resultCode == RESULT_OK){
+            //データの格納
+            val imagebitmap = data?.extras?.get("data") as Bitmap
+
+
+        }
     }
 
     // Activity終了時にRealmを終了すること

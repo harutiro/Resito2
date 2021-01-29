@@ -81,4 +81,17 @@
         app:layout_constraintTop_toBottomOf="@+id/saihuIconId"
         app:srcCompat="@android:drawable/checkbox_off_background" />
 
+    <ImageView
+        android:id="@+id/resitoImage"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="7dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/saihuId"
+        app:layout_constraintEnd_toStartOf="@+id/saihuIconId"
+        app:layout_constraintStart_toEndOf="@+id/nedanId"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
