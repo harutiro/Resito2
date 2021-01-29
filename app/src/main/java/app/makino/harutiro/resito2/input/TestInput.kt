@@ -36,7 +36,7 @@ class TestInput : AppCompatActivity() {
     var id: String? = null
 
     //レシート画像
-    var resitoImage =""
+    var resitoImage = "empty"
 
     private val realm by lazy {
         Realm.getDefaultInstance()
@@ -63,9 +63,6 @@ class TestInput : AppCompatActivity() {
 
         // MainActivityのRecyclerViewの要素をタップした場合はidが，fabをタップした場合は"空白"が入っているはず
         id = intent.getStringExtra("id")
-
-        //レシート画像出力
-        resitoGazou()
 
         //======================================findViewById==========================================
 
@@ -163,11 +160,15 @@ class TestInput : AppCompatActivity() {
 
                 val decodedByte: ByteArray = Base64.decode(item.resitoImage, 0)
                 findViewById<ImageView>(R.id.resitoImageView).setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
+                findViewById<ImageView>(R.id.resitoImageView).setVisibility(View.VISIBLE)
+                resitoImage = item.resitoImage
 
                 println(item.akaibu)
             }
 
         }
+
+        resitoGazou()
 
 
 
@@ -208,11 +209,11 @@ class TestInput : AppCompatActivity() {
 
     /*=================================動作まとめ=======================================*/
     fun resitoGazou(){
-        if(resitoImage == null) {
+        if(resitoImage == "empty") {
             resitoImage = intent.getStringExtra("resitoImage").toString()
         }
 
-        if(resitoImage != null) {
+        if(resitoImage != "null") {
             val decodedByte: ByteArray = Base64.decode(resitoImage, 0)
             findViewById<ImageView>(R.id.resitoImageView).setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
         }else{
