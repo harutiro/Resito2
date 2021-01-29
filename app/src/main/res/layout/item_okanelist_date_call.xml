@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_marginTop="8dp"
-    android:background="@drawable/marukado"
-    android:backgroundTint="#E0F2F1">
+    android:background="#E0F2F1">
 
     <TextView
         android:id="@+id/hizukeId"

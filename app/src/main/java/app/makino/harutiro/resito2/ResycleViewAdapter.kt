@@ -1,6 +1,7 @@
 package app.makino.harutiro.resito2
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,12 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
         holder.saihuText.text = item.saihu
         holder.nedanText.text = item.nedan.toString() + "￥"
 
+        //アーカイブの色変更
+        if(item.akaibu) {
+            holder.container.setBackgroundColor(Color.parseColor("#E8EAF6"))
+        }else{
+            holder.container.setBackgroundColor(Color.parseColor("#E0F2F1"))
+        }
         println(item.saihu)
 
 
