@@ -59,6 +59,8 @@ class TestInput : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_input)
 
+
+
         //====================================他の入力画面からの入力======================================
 
         // MainActivityのRecyclerViewの要素をタップした場合はidが，fabをタップした場合は"空白"が入っているはず
