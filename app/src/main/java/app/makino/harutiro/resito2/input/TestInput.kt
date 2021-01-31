@@ -1,14 +1,20 @@
 package app.makino.harutiro.resito2.input
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.Image
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.view.MotionEvent
@@ -17,11 +23,17 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.fragment.app.DialogFragment
 import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
 import io.realm.Realm
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -29,14 +41,18 @@ import java.util.*
 class TestInput : AppCompatActivity() {
 
     //インテントの戻るいちを指定
-    val REQUEST_PREVIEW = 1
-
+    val REQUEST_PICTURE = 2
+    val REQUEST_EXTERNAL_STORAGE = 3
 
     // idをonCreate()とonDestroy()で利用するため
     var id: String? = null
 
     //レシート画像
-    var resitoImage = "empty"
+    lateinit var resitoImage:Bitmap
+    lateinit var currentPhotoUri : Uri
+    var UriString = ""
+
+
 
     private val realm by lazy {
         Realm.getDefaultInstance()
@@ -65,6 +81,8 @@ class TestInput : AppCompatActivity() {
 
         // MainActivityのRecyclerViewの要素をタップした場合はidが，fabをタップした場合は"空白"が入っているはず
         id = intent.getStringExtra("id")
+        UriString = intent.getStringExtra("resitoImage").toString()
+
 
         //======================================findViewById==========================================
 
@@ -110,11 +128,28 @@ class TestInput : AppCompatActivity() {
         findViewById<ImageView>(R.id.resitoImageView).setOnTouchListener { view, event ->
 
             if (event.action == MotionEvent.ACTION_DOWN) {
-                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { intent ->
-                    intent.resolveActivity(packageManager)?.also {
-                        startActivityForResult(intent, REQUEST_PREVIEW)
-                    }
-                }
+
+                val context: Context = applicationContext
+
+                // 保存先のフォルダー
+                val cFolder: File? = context.getExternalFilesDir(Environment.DIRECTORY_DCIM)
+
+                //        *名前関係*       //
+                //　フォーマット作成
+                val fileDate: String = SimpleDateFormat("ddHHmmss", Locale.US).format(Date())
+                //　名前作成
+                val fileName: String = String.format("CameraIntent_%s.jpg", fileDate)
+
+                //uriの前作成
+                val cameraFile: File = File(cFolder, fileName)
+
+                //uri最終作成
+                currentPhotoUri = FileProvider.getUriForFile(this, context.packageName.toString() + ".fileprovider", cameraFile)
+
+
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
+                startActivityForResult(intent, REQUEST_PICTURE)
 
             }
             true
@@ -146,6 +181,8 @@ class TestInput : AppCompatActivity() {
             //時間データセット
             hizukeId?.setText(formatted)
 
+            resitoGazou()
+
 
 
         }else{
@@ -163,9 +200,9 @@ class TestInput : AppCompatActivity() {
                 val decodedByte: ByteArray = Base64.decode(item.resitoImage, 0)
                 findViewById<ImageView>(R.id.resitoImageView).setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
                 findViewById<ImageView>(R.id.resitoImageView).setVisibility(View.VISIBLE)
-                resitoImage = item.resitoImage
+                UriString = item.resitoImage
+                currentPhotoUri = UriString.toUri()
 
-                println(item.akaibu)
             }
 
         }
@@ -207,19 +244,18 @@ class TestInput : AppCompatActivity() {
             }.show(supportFragmentManager,"date_dialog")
 
         }
+
+        //==========================権限関係===============================
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            storagePermission()
+        }
     }
 
     /*=================================動作まとめ=======================================*/
     fun resitoGazou(){
-        if(resitoImage == "empty") {
-            resitoImage = intent.getStringExtra("resitoImage").toString()
-        }
-
-        if(resitoImage != "null") {
-            val decodedByte: ByteArray = Base64.decode(resitoImage, 0)
-            findViewById<ImageView>(R.id.resitoImageView).setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
+        if(UriString != "null") {
+            findViewById<ImageView>(R.id.resitoImageView).setImageURI(UriString.toUri())
         }else{
-
             findViewById<ImageView>(R.id.resitoImageView).setVisibility(View.GONE)
         }
     }
@@ -238,7 +274,7 @@ class TestInput : AppCompatActivity() {
 
             }
 
-            new?.resitoImage = resitoImage
+            new?.resitoImage = UriString
 
             new?.hizuke = hizukeId?.text.toString()
 
@@ -247,6 +283,33 @@ class TestInput : AppCompatActivity() {
             new?.saihu = sihuId?.text.toString()
 
             new?.akaibu = akaibu
+        }
+    }
+
+    //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝権限関係関数=========================================
+    private fun storagePermission() {
+        val permission = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    REQUEST_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+    ) {
+        when (requestCode) {
+            REQUEST_EXTERNAL_STORAGE -> {
+                resitoImageView?.isEnabled = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            }
         }
     }
 
@@ -286,20 +349,23 @@ class TestInput : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         //データを受け取る
-        if (requestCode == REQUEST_PREVIEW && data!=null && resultCode == RESULT_OK){
-            //データの格納
-            val imagebitmap = data?.extras?.get("data") as Bitmap
+        if (requestCode == REQUEST_PICTURE) {
 
-            //＝＝＝＝＝＝＝＝＝＝＝＝＝＝BASE６４＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-            //エンコード
-            val immagex: Bitmap = imagebitmap
-            val baos = ByteArrayOutputStream()
-            immagex.compress(Bitmap.CompressFormat.PNG, 100, baos)
-            val b: ByteArray = baos.toByteArray()
-            resitoImage = Base64.encodeToString(b, Base64.NO_WRAP)
+            when (resultCode) {
+                RESULT_OK -> {
 
-            resitoGazou()
+                    resitoImageView?.setImageURI(currentPhotoUri)
+                    UriString = currentPhotoUri.toString()
 
+                }
+
+                //正常じゃないとき　Cancelされたとき
+                else -> {
+                    //メディアプレイヤーに追加したデータを消去する
+                    contentResolver.delete(currentPhotoUri, null, null)
+                }
+
+            }
         }
     }
 

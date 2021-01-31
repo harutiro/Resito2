@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerViewAdapter(private val context: Context,private val listener: OnItemClickListner):
@@ -52,8 +53,7 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
 
 
         if (item.resitoImage != "") {
-            val decodedByte: ByteArray = Base64.decode(item.resitoImage, 0)
-            holder.resitoImageView.setImageBitmap(BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.size))
+            holder.resitoImageView.setImageURI(item.resitoImage.toUri())
         }else{
             holder.resitoImageView.setVisibility(View.GONE)
         }

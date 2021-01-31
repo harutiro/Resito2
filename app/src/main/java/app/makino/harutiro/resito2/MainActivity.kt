@@ -1,15 +1,25 @@
 package app.makino.harutiro.resito2
 
+import android.Manifest
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.view.View
 import android.widget.Button
 import android.widget.Switch
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.makino.harutiro.resito2.input.inputPageNedan
 import app.makino.harutiro.resito2.input.TestInput
@@ -17,6 +27,9 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +45,16 @@ class MainActivity : AppCompatActivity() {
     //Allモードにするか保存
     var allViewMode = false
 
+    //写真関係
+    val REQUEST_PICTURE = 2
+    val REQUEST_EXTERNAL_STORAGE = 3
+    var UriString = ""
+    lateinit var currentPhotoUri : Uri
+
+    //findViewById
+    var fabCamera:View? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,15 +62,37 @@ class MainActivity : AppCompatActivity() {
         //findviewByIdの保存場所
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.resycleView)
         val AllView = findViewById<Switch>(R.id.AllSwitchId)
+        fabCamera = findViewById(R.id.fabCamera)
 
 
         //カメラ写真入力
+
+
         findViewById<View>(R.id.fabCamera).setOnClickListener {
-            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { intent ->
-                intent.resolveActivity(packageManager)?.also {
-                    startActivityForResult(intent, REQUEST_PREVIEW)
-                }
-            }
+
+            val context: Context = applicationContext
+
+            // 保存先のフォルダー
+            val cFolder: File? = context.getExternalFilesDir(Environment.DIRECTORY_DCIM)
+
+            //        *名前関係*       //
+            //　フォーマット作成
+            val fileDate: String = SimpleDateFormat("ddHHmmss", Locale.US).format(Date())
+            //　名前作成
+            val fileName: String = String.format("CameraIntent_%s.jpg", fileDate)
+
+            //uriの前作成
+            val cameraFile: File = File(cFolder, fileName)
+
+            //uri最終作成
+            currentPhotoUri = FileProvider.getUriForFile(this, context.packageName.toString() + ".fileprovider", cameraFile)
+
+
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
+            startActivityForResult(intent, REQUEST_PICTURE)
+
+            UriString = currentPhotoUri.toString()
 
         }
 
@@ -87,9 +132,43 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(inputPage,1)
         }
 
+        //============================権限関係======================================
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            storagePermission()
+        }
 
 
 
+
+    }
+
+    //======================================権限関係関数=================================
+
+    private fun storagePermission() {
+        val permission = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    REQUEST_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+    ) {
+        when (requestCode) {
+            REQUEST_EXTERNAL_STORAGE -> {
+                fabCamera?.isEnabled = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            }
+        }
     }
 
 
@@ -156,27 +235,27 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         //データを受け取る
-        if (requestCode == REQUEST_PREVIEW && data!=null && resultCode == RESULT_OK){
-            //データの格納
-            val imagebitmap = data?.extras?.get("data") as Bitmap
+        if (requestCode == REQUEST_PICTURE) {
 
-            //＝＝＝＝＝＝＝＝＝＝＝＝＝＝BASE６４＝＝＝＝＝＝＝＝＝＝＝＝＝＝
-            //エンコード
-            val immagex: Bitmap = imagebitmap
-            val baos = ByteArrayOutputStream()
-            immagex.compress(Bitmap.CompressFormat.PNG, 100, baos)
-            val b: ByteArray = baos.toByteArray()
-            val output = Base64.encodeToString(b, Base64.NO_WRAP)
+            when (resultCode) {
+                RESULT_OK -> {
+
+                    val inputPage = Intent(this, TestInput::class.java)
+                    inputPage.putExtra("resitoImage",UriString)
+                    startActivity(inputPage)
 
 
+                }
 
-            //インテント
-            val inputPage = Intent(this, TestInput::class.java)
-            inputPage.putExtra("resitoImage",output)
-            startActivity(inputPage)
+                //正常じゃないとき　Cancelされたとき
+                else -> {
+                    //メディアプレイヤーに追加したデータを消去する
+                    contentResolver.delete(currentPhotoUri, null, null)
+                }
 
-
+            }
         }
+
     }
 
     // Activity終了時にRealmを終了すること

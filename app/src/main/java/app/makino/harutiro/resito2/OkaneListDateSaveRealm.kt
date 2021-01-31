@@ -15,7 +15,7 @@ open class OkaneListDateSaveRealm ( //メモのクラスを定義 //openを書�
     open var saihu:String = "",
     open var akaibu:Boolean = false,
     @PrimaryKey open var Id: String = UUID.randomUUID().toString(),
-    open var resitoImage:String = ""
+    open var resitoImage:String = "null"
 
 
 ): RealmObject() //RealmObjectという方を継承している部分 メモというクラスをRealmで保存できる型にすることができる
