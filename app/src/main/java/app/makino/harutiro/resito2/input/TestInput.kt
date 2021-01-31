@@ -43,6 +43,11 @@ class TestInput : AppCompatActivity() {
     //インテントの戻るいちを指定
     val REQUEST_PICTURE = 2
     val REQUEST_EXTERNAL_STORAGE = 3
+    
+    //日にち保存
+    object ukewatasi {
+        var hizukeSystem = ""
+    }
 
     // idをonCreate()とonDestroy()で利用するため
     var id: String? = null
@@ -283,6 +288,8 @@ class TestInput : AppCompatActivity() {
             new?.saihu = sihuId?.text.toString()
 
             new?.akaibu = akaibu
+
+            new?.hizukeSystem = ukewatasi.hizukeSystem
         }
     }
 
@@ -369,35 +376,61 @@ class TestInput : AppCompatActivity() {
         }
     }
 
+
+
+    //======================================ダイアログの出力部分======================================
+    class DateDialog(val motoDate: String ,private val onSelected: (String) -> Unit) :
+            DialogFragment(), DatePickerDialog.OnDateSetListener {
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+            val c = Calendar.getInstance()
+
+
+            //デフォルト設定の設定部分
+            val year = henkan(motoDate).yyyy()
+            val month = henkan(motoDate).mm()
+            val date = henkan(motoDate).dd()
+
+
+            //デフォルト設定出力部分
+            return DatePickerDialog(requireActivity(), this, year, month, date)
+        }
+
+        //帰ってきたデータを送り返すところ
+        override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+
+            //データを書き換えるよう
+            val month1 = month + 1
+
+            //基本データ書き込み
+            var monthString = month1.toString()
+            var dayOfMonthString = dayOfMonth.toString()
+
+            //データが一桁ならゼロ追加
+            if(month1 < 10){
+                monthString = "0" + month1.toShort()
+            }
+            if(dayOfMonth < 10){
+                dayOfMonthString = "0" + dayOfMonth.toString()
+            }
+
+
+            onSelected("${year}年 ${monthString}月 ${dayOfMonthString}日")
+            
+            ukewatasi.hizukeSystem = "${year}-${monthString}-${dayOfMonthString}"
+
+        }
+    }
+
+
+
+
 }
 
 
 
 /*===================================クラスまとめ=====================================*/
 
-//ダイアログの出力部分
-class DateDialog(val motoDate: String ,private val onSelected: (String) -> Unit) :
-        DialogFragment(), DatePickerDialog.OnDateSetListener {
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val c = Calendar.getInstance()
 
-
-        //デフォルト設定の設定部分
-        val year = henkan(motoDate).yyyy()
-        val month = henkan(motoDate).mm()
-        val date = henkan(motoDate).dd()
-
-
-        //デフォルト設定出力部分
-        return DatePickerDialog(requireActivity(), this, year, month, date)
-    }
-
-    //帰ってきたデータを送り返すところ
-    override fun onDateSet(view: DatePicker?, year: Int,
-                           month: Int, dayOfMonth: Int) {
-        onSelected("${year}年 ${month + 1}月 ${dayOfMonth}日")
-    }
-}
 
 
 //文字データを年、月、日にバラバラにするクラス
