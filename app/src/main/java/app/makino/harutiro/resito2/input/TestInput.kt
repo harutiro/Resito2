@@ -130,7 +130,9 @@ class TestInput : AppCompatActivity() {
             finish()
         }
 
-        findViewById<ImageView>(R.id.resitoImageView).setOnTouchListener { view, event ->
+
+
+        findViewById<View>(R.id.fabCameraTestInput).setOnTouchListener { view, event ->
 
             if (event.action == MotionEvent.ACTION_DOWN) {
 

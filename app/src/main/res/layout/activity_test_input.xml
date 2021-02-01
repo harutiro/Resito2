@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".input.TestInput">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCameraTestInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
     <Button
         android:id="@+id/delButton"
         android:layout_width="wrap_content"
@@ -14,8 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/saveButton"
-        app:layout_constraintTop_toBottomOf="@+id/inSihuId"
-        app:layout_constraintVertical_bias="0.502" />
+        app:layout_constraintTop_toBottomOf="@+id/akaibuSwichId" />
 
     <Button
         android:id="@+id/saveButton"
@@ -25,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/delButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inSihuId" />
+        app:layout_constraintTop_toBottomOf="@+id/akaibuSwichId" />
 
     <EditText
         android:id="@+id/inNedanId"
@@ -48,7 +58,7 @@
         android:gravity="start|top"
         android:hint="サイフの入力"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintBottom_toTopOf="@+id/akaibuSwichId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inNedanId" />
@@ -68,10 +78,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="アーカイブ"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/saveButton" />
+        app:layout_constraintTop_toBottomOf="@+id/inSihuId" />
 
     <ImageView
         android:id="@+id/resitoImageView"
