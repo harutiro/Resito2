@@ -43,11 +43,6 @@ class TestInput : AppCompatActivity() {
     //インテントの戻るいちを指定
     val REQUEST_PICTURE = 2
     val REQUEST_EXTERNAL_STORAGE = 3
-    
-    //日にち保存
-    object ukewatasi {
-        var hizukeSystem = ""
-    }
 
     // idをonCreate()とonDestroy()で利用するため
     var id: String? = null
@@ -291,7 +286,10 @@ class TestInput : AppCompatActivity() {
 
             new?.akaibu = akaibu
 
-            new?.hizukeSystem = ukewatasi.hizukeSystem
+            new?.hizukeSystem = henkan(hizukeId?.text.toString()).yyyy().toString() +
+                                henkan(hizukeId?.text.toString()).mm2().toString() +
+                                henkan(hizukeId?.text.toString()).dd().toString()
+
         }
     }
 
@@ -388,9 +386,9 @@ class TestInput : AppCompatActivity() {
 
 
             //デフォルト設定の設定部分
-            val year = henkan(motoDate).yyyy()
-            val month = henkan(motoDate).mm()
-            val date = henkan(motoDate).dd()
+            val year = henkan(motoDate).yyyy().toInt()
+            val month = henkan(motoDate).mm().toInt()
+            val date = henkan(motoDate).dd().toInt()
 
 
             //デフォルト設定出力部分
@@ -417,8 +415,6 @@ class TestInput : AppCompatActivity() {
 
 
             onSelected("${year}年 ${monthString}月 ${dayOfMonthString}日")
-            
-            ukewatasi.hizukeSystem = "${year}-${monthString}-${dayOfMonthString}"
 
         }
     }
@@ -440,7 +436,7 @@ class henkan(val motoDate:String){
 
     //アルス信号の応用！！
 
-    fun yyyy(): Int {
+    fun yyyy(): String {
         var charAry = motoDate.toCharArray()
         var ukeire = ""
 
@@ -456,10 +452,10 @@ class henkan(val motoDate:String){
 
         }
 
-        return ukeire.toInt()
+        return ukeire
     }
 
-    fun mm():Int{
+    fun mm():String{
         var charAry = motoDate.toCharArray()
         var ukeire = ""
         var hantei = false
@@ -478,10 +474,32 @@ class henkan(val motoDate:String){
             }
         }
 
-        return ukeire.toInt()-1
+        return (ukeire.toInt()-1).toString()
     }
 
-    fun dd():Int{
+    fun mm2():String{
+        var charAry = motoDate.toCharArray()
+        var ukeire = ""
+        var hantei = false
+
+        for (ch in charAry){
+
+            when(ch){
+
+                ' '-> ukeire += ""
+                '年'-> hantei = true
+                '月'-> break
+                else-> if(hantei){
+                    ukeire += ch
+                }
+
+            }
+        }
+
+        return ukeire
+    }
+
+    fun dd():String{
         var charAry = motoDate.toCharArray()
         var ukeire = ""
         var hantei = false
@@ -500,6 +518,6 @@ class henkan(val motoDate:String){
             }
         }
 
-        return ukeire.toInt()
+        return ukeire
     }
 }
