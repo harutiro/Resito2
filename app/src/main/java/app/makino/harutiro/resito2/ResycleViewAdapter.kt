@@ -1,9 +1,7 @@
 package app.makino.harutiro.resito2
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +47,7 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
         holder.zyanruIconImage.setImageResource(item.zyanruIcon)
         holder.hizukeText.text = item.hizuke
         holder.saihuText.text = item.saihu
-        holder.nedanText.text = item.nedan.toString() + "￥"
+        holder.nedanText.text = "￥" + item.nedan.toString()
 
 
         if (item.resitoImage != "") {

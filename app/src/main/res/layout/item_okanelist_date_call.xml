@@ -19,19 +19,34 @@
             android:id="@+id/hizukeId"
             android:layout_width="200dp"
             android:layout_height="23dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/marukado"
             android:backgroundTint="#B2DFDB"
             android:paddingLeft="8dp"
             android:text="hizukeId"
-            app:layout_constraintBottom_toTopOf="@+id/nedanId"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/nedanId"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:background="@drawable/marukado"
+            android:backgroundTint="#B2DFDB"
+            android:gravity="center_vertical|end"
+            android:paddingEnd="8dp"
+            android:text="nedanId"
+            android:textColor="#4CAF50"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/buyName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hizukeId" />
+
+        <TextView
+            android:id="@+id/buyName"
             android:layout_width="200dp"
-            android:layout_height="49dp"
+            android:layout_height="20dp"
             android:background="@drawable/marukado"
             android:backgroundTint="#B2DFDB"
             android:paddingLeft="8dp"
@@ -40,7 +55,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hizukeId" />
+            app:layout_constraintTop_toBottomOf="@+id/nedanId" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
