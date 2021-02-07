@@ -289,43 +289,6 @@ class TestInput : AppCompatActivity() {
         }
     }
 
-    //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝権限関係関数=========================================
-    private fun storagePermission() {
-        val permission = ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    REQUEST_EXTERNAL_STORAGE
-            )
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-    ) {
-        when (requestCode) {
-            REQUEST_EXTERNAL_STORAGE -> {
-                resitoImageView?.isEnabled = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
-            }
-        }
-    }
-
-
-    // Activity終了時にralmを終了
-    override fun onDestroy() {
-        realm.close()
-        super.onDestroy()
-
-        sinki = false
-
-    }
-
     //戻るボタンの処理
     override fun onBackPressed() {
         // 行いたい処理
@@ -372,14 +335,46 @@ class TestInput : AppCompatActivity() {
         }
     }
 
+    //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ Activity終了時にralmを終了＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+    override fun onDestroy() {
+        realm.close()
+        super.onDestroy()
+
+        sinki = false
+
+    }
+
+    //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝権限関係関数=========================================
+    private fun storagePermission() {
+        val permission = ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    REQUEST_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
+    ) {
+        when (requestCode) {
+            REQUEST_EXTERNAL_STORAGE -> {
+                resitoImageView?.isEnabled = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            }
+        }
+    }
+
 
 
 
 }
-
-
-
-/*===================================クラスまとめ=====================================*/
 
 
 
