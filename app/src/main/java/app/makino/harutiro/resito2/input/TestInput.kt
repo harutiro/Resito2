@@ -252,6 +252,7 @@ class TestInput : AppCompatActivity() {
     /*=================================動作まとめ=======================================*/
     fun resitoGazou(){
         if(UriString != "null") {
+            findViewById<ImageView>(R.id.resitoImageView).setVisibility(View.VISIBLE)
             findViewById<ImageView>(R.id.resitoImageView).setImageURI(UriString.toUri())
         }else{
             findViewById<ImageView>(R.id.resitoImageView).setVisibility(View.GONE)
@@ -322,6 +323,8 @@ class TestInput : AppCompatActivity() {
 
                     resitoImageView?.setImageURI(currentPhotoUri)
                     UriString = currentPhotoUri.toString()
+
+                    resitoGazou()
 
                 }
 
