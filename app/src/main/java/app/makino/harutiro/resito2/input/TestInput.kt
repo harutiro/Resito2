@@ -2,15 +2,11 @@ package app.makino.harutiro.resito2.input
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -27,12 +23,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
-import androidx.fragment.app.DialogFragment
 import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
 import app.makino.harutiro.resito2.dousaMatome.DateDialog
+import app.makino.harutiro.resito2.dousaMatome.Henkan
 import io.realm.Realm
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -287,9 +282,9 @@ class TestInput : AppCompatActivity() {
 
             new?.akaibu = akaibu
 
-            new?.hizukeSystem = henkan(hizukeId?.text.toString()).yyyy().toString() +
-                                henkan(hizukeId?.text.toString()).mm2().toString() +
-                                henkan(hizukeId?.text.toString()).dd().toString()
+            new?.hizukeSystem = Henkan(hizukeId?.text.toString()).yyyy().toString() +
+                                Henkan(hizukeId?.text.toString()).mm2().toString() +
+                                Henkan(hizukeId?.text.toString()).dd().toString()
 
         }
     }
@@ -389,93 +384,3 @@ class TestInput : AppCompatActivity() {
 
 
 
-//文字データを年、月、日にバラバラにするクラス
-class henkan(val motoDate:String){
-
-    //アルス信号の応用！！
-
-    fun yyyy(): String {
-        var charAry = motoDate.toCharArray()
-        var ukeire = ""
-
-        for(ch in charAry){
-
-            when(ch){
-
-                ' '-> ukeire += ""
-                '年'-> break
-                else->ukeire += ch
-
-            }
-
-        }
-
-        return ukeire
-    }
-
-    fun mm():String{
-        var charAry = motoDate.toCharArray()
-        var ukeire = ""
-        var hantei = false
-
-        for (ch in charAry){
-
-            when(ch){
-
-                ' '-> ukeire += ""
-                '年'-> hantei = true
-                '月'-> break
-                else-> if(hantei){
-                    ukeire += ch
-                }
-
-            }
-        }
-
-        return (ukeire.toInt()-1).toString()
-    }
-
-    fun mm2():String{
-        var charAry = motoDate.toCharArray()
-        var ukeire = ""
-        var hantei = false
-
-        for (ch in charAry){
-
-            when(ch){
-
-                ' '-> ukeire += ""
-                '年'-> hantei = true
-                '月'-> break
-                else-> if(hantei){
-                    ukeire += ch
-                }
-
-            }
-        }
-
-        return ukeire
-    }
-
-    fun dd():String{
-        var charAry = motoDate.toCharArray()
-        var ukeire = ""
-        var hantei = false
-
-        for (ch in charAry){
-
-            when(ch){
-
-                ' '-> ukeire += ""
-                '月'-> hantei = true
-                '日'-> break
-                else-> if(hantei){
-                    ukeire += ch
-                }
-
-            }
-        }
-
-        return ukeire
-    }
-}

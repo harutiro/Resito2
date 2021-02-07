@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
-import app.makino.harutiro.resito2.input.henkan
 import java.util.*
 
 class DateDialog(val motoDate: String ,private val onSelected: (String) -> Unit) :
@@ -15,9 +14,9 @@ class DateDialog(val motoDate: String ,private val onSelected: (String) -> Unit)
 
 
             //デフォルト設定の設定部分
-            val year = henkan(motoDate).yyyy().toInt()
-            val month = henkan(motoDate).mm().toInt()
-            val date = henkan(motoDate).dd().toInt()
+            val year = Henkan(motoDate).yyyy().toInt()
+            val month = Henkan(motoDate).mm().toInt()
+            val date = Henkan(motoDate).dd().toInt()
 
 
             //デフォルト設定出力部分
