@@ -66,6 +66,8 @@ class MainActivity : AppCompatActivity() {
         fabCamera = findViewById(R.id.fabCamera)
 
 
+
+
         //カメラ写真入力
 
 
