@@ -4,258 +4,262 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00FFFFFF"
+    android:background="#E0F2F1"
     android:orientation="vertical"
     android:padding="24dp"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/numberText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/marukado"
+        android:fontFamily="serif-monospace"
+        android:gravity="end"
+        android:maxLines="1"
+        android:padding="16dp"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:textSize="64sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="58dp" />
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numberText">
 
-        <TextView
-            android:id="@+id/numberText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/marukado"
-            android:fontFamily="serif-monospace"
-            android:gravity="end"
-            android:maxLines="1"
-            android:padding="16dp"
-            android:text="0"
-            android:textColor="#FFFFFF"
-            android:textSize="64sp" />
+        <Button
+            android:id="@+id/numberButton7"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#F9FBE7"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="7"
+            android:textSize="40sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingTop="48dp">
+        <Button
+            android:id="@+id/numberButton8"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="8"
+            android:textSize="40sp" />
 
-            <Button
-                android:id="@+id/numberButton7"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#80FFFFFF"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="7"
-                android:textSize="40sp" />
+        <Button
+            android:id="@+id/numberButton9"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="9"
+            android:textSize="40sp" />
 
-            <Button
-                android:id="@+id/numberButton8"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#80FFFFFF"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="8"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/numberButton9"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#80FFFFFF"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="9"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/multiplyButton"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#C9FFEB3B"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="×"
-                android:textSize="40sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingTop="16dp">
-
-            <Button
-                android:id="@+id/numberButton4"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#80FFFFFF"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="4"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/numberButton5"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#80FFFFFF"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="5"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/numberButton6"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#80FFFFFF"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="6"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/minusButton"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#C9FFEB3B"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="-"
-                android:textSize="40sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingTop="16dp">
-
-            <Button
-                android:id="@+id/numberButton1"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#80FFFFFF"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="1"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/numberButton2"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#80FFFFFF"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="2"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/numberButton3"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#80FFFFFF"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="3"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/plusButton"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#C9FFEB3B"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="+"
-                android:textSize="40sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:paddingTop="16dp">
-
-            <Button
-                android:id="@+id/numberButton0"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#80FFFFFF"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="0"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/clearBotton"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#C9FFEB3B"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="C"
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/equalButton"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#C9FFEB3B"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="="
-                android:textSize="40sp" />
-
-            <Button
-                android:id="@+id/waruButton"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/background_button_circle"
-                android:backgroundTint="#C9FFEB3B"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="÷"
-                android:textSize="40sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingTop="16dp">
-
-            <Button
-                android:id="@+id/intentButton"
-                android:layout_width="132dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="84dp"
-                android:background="@drawable/marukado"
-                android:backgroundTint="#C9FFEB3B"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="次へ"
-                android:textSize="40sp" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/multiplyButton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="×"
+            android:textSize="40sp" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <Button
+            android:id="@+id/numberButton4"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="4"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/numberButton5"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="5"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/numberButton6"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="6"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/minusButton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="-"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <Button
+            android:id="@+id/numberButton1"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="1"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/numberButton2"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="2"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/numberButton3"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="3"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/plusButton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="+"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/intentButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <Button
+            android:id="@+id/numberButton0"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="0"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/clearBotton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="C"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/equalButton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="="
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/waruButton"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/background_button_circle"
+            android:backgroundTint="#E0F2F1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:text="÷"
+            android:textSize="40sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/intentButton"
+        android:layout_width="132dp"
+        android:layout_height="64dp"
+        android:background="@drawable/marukado"
+        android:backgroundTint="#E0F2F1"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:text="次へ"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

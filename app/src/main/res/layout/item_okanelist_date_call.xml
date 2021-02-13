@@ -4,137 +4,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginTop="8dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     android:background="#E0F2F1">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout4"
+    <TextView
+        android:id="@+id/buyName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/marukado"
+        android:backgroundTint="#B2DFDB"
+        android:padding="8dp"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/zyanruIconId"
+        app:layout_constraintStart_toEndOf="@+id/nedanId"
+        app:layout_constraintTop_toTopOf="@+id/nedanId" />
+
+    <TextView
+        android:id="@+id/hizukeId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="#B2DFDB"
+        android:text="hizukeId"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/saihuId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nedanId"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/marukado"
+        android:backgroundTint="#B2DFDB"
+        android:gravity="center_vertical|end"
+        android:padding="16dp"
+        android:text="nedanId"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hizukeId" />
 
-        <CheckBox
-            android:id="@+id/akaibuCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/saihuId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#B2DFDB"
+        android:text="sihuId"
+        android:textColor="#000000"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/saihuIconId"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout4">
-
-        <TextView
-            android:id="@+id/hizukeId"
-            android:layout_width="200dp"
-            android:layout_height="23dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/marukado"
-            android:backgroundTint="#B2DFDB"
-            android:paddingLeft="8dp"
-            android:text="hizukeId"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/nedanId"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
-            android:background="@drawable/marukado"
-            android:backgroundTint="#B2DFDB"
-            android:gravity="center_vertical|end"
-            android:paddingEnd="8dp"
-            android:text="nedanId"
-            android:textColor="#4CAF50"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/buyName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hizukeId" />
-
-        <TextView
-            android:id="@+id/buyName"
-            android:layout_width="200dp"
-            android:layout_height="20dp"
-            android:background="@drawable/marukado"
-            android:backgroundTint="#B2DFDB"
-            android:paddingLeft="8dp"
-            android:paddingTop="16dp"
-            android:text="nedanId"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nedanId" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="73dp"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toStartOf="@+id/constraintLayout3"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout">
-
-        <TextView
-            android:id="@+id/saihuId"
-            android:layout_width="73dp"
-            android:layout_height="20dp"
-            android:background="@drawable/marukado"
-            android:backgroundTint="#B2DFDB"
-            android:paddingLeft="8dp"
-            android:text="sihuId"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/resitoImage" />
-
-        <ImageView
-            android:id="@+id/resitoImage"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@+id/saihuId"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
+    <ImageView
+        android:id="@+id/zyanruIconId"
         android:layout_width="30dp"
-        android:layout_height="match_parent"
+        android:layout_height="30dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/saihuIconId"
+        app:layout_constraintStart_toStartOf="@+id/saihuIconId"
+        app:layout_constraintTop_toBottomOf="@+id/saihuIconId"
+        app:srcCompat="@android:drawable/checkbox_off_background" />
+
+    <ImageView
+        android:id="@+id/saihuIconId"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/saihuId"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout2">
-
-        <ImageView
-            android:id="@+id/saihuIconId"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@+id/zyanruIconId"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/btn_star_big_on" />
-
-        <ImageView
-            android:id="@+id/zyanruIconId"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/saihuIconId"
-            app:srcCompat="@android:drawable/checkbox_off_background" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="@+id/saihuId"
+        app:srcCompat="@android:drawable/btn_star_big_on" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -65,11 +65,16 @@ class TestInput : AppCompatActivity() {
     //アーカイブ状態
     var akaibu = false
 
+    //財布アイコンURI
+    var saihuUriStaring = ""
+
     //findViewを外で使うところ
     var hizukeId:TextView? = null
     var nedanId:EditText? = null
     var sihuId:TextView? = null
     var resitoImageView:ImageView? = null
+    var saihuIcon:ImageView? = null
+    var buyName:TextView? = null
 
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.O)
@@ -95,6 +100,9 @@ class TestInput : AppCompatActivity() {
         val saveButtonId = findViewById<Button>(R.id.saveButton)
         val akaibuSwitch = findViewById<Switch>(R.id.akaibuSwichId)
         val dellButton = findViewById<Button>(R.id.delButton)
+        saihuIcon = findViewById(R.id.saihuIcon)
+        buyName = findViewById(R.id.buyNameTest)
+
 
 
 
@@ -115,6 +123,7 @@ class TestInput : AppCompatActivity() {
 
         }
 
+        //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝消去＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
         dellButton.setOnClickListener {
             val persons = realm.where(OkaneListDateSaveRealm::class.java).equalTo("Id", id).findAll()
 
@@ -135,7 +144,7 @@ class TestInput : AppCompatActivity() {
         }
 
 
-
+        //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝カメラ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
         findViewById<View>(R.id.fabCameraTestInput).setOnTouchListener { view, event ->
 
             if (event.action == MotionEvent.ACTION_DOWN) {
@@ -205,7 +214,7 @@ class TestInput : AppCompatActivity() {
             if(item != null) {
                 findViewById<TextView>(R.id.dayTextView).setText(item.hizuke)
                 findViewById<EditText>(R.id.inNedanId).setText(item.nedan.toString())
-                findViewById<EditText>(R.id.inSihuId).setText(item.saihu)
+                findViewById<TextView>(R.id.inSihuId).setText(item.saihu)
                 findViewById<Switch>(R.id.akaibuSwichId).isChecked = item.akaibu
 
                 val decodedByte: ByteArray = Base64.decode(item.resitoImage, 0)
@@ -213,6 +222,10 @@ class TestInput : AppCompatActivity() {
                 findViewById<ImageView>(R.id.resitoImageView).setVisibility(View.VISIBLE)
                 UriString = item.resitoImage
                 currentPhotoUri = UriString.toUri()
+
+                buyName?.text = item.buyName
+                saihuIcon?.setImageURI(item.saihuIcon.toUri())
+                saihuUriStaring = item.saihuIcon
 
             }
 
@@ -300,6 +313,8 @@ class TestInput : AppCompatActivity() {
                                 Henkan(hizukeId?.text.toString()).mm2().toString() +
                                 Henkan(hizukeId?.text.toString()).dd().toString()
 
+            new?.buyName = buyName?.text.toString()
+            new?.saihuIcon = saihuUriStaring
         }
     }
 
@@ -392,9 +407,18 @@ class TestInput : AppCompatActivity() {
 
         val dataStore: SharedPreferences = getSharedPreferences("DateStore", Context.MODE_PRIVATE)
         val id = dataStore.getString("idGo","NoDate")
+        val uri = dataStore.getString("uriGo","NoDate")
 
         val item: SaihuSettingListDateSaveRealm? = realm.where(SaihuSettingListDateSaveRealm::class.java).equalTo("Id",id).findFirst()
         sihuId?.text = item?.name
+
+        if (uri != null) {
+            saihuUriStaring = uri
+        }
+
+
+
+
 
 
     }

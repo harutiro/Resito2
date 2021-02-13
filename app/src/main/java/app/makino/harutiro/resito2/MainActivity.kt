@@ -64,13 +64,10 @@ class MainActivity : AppCompatActivity() {
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.resycleView)
         val AllView = findViewById<Switch>(R.id.AllSwitchId)
         fabCamera = findViewById(R.id.fabCamera)
-        val selectButton = findViewById<Button>(R.id.selectButtonMain)
 
 
 
         //カメラ写真入力
-
-
         findViewById<View>(R.id.fabCamera).setOnClickListener {
 
             val context: Context = applicationContext
@@ -133,49 +130,6 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.Fab).setOnClickListener {
             val inputPage = Intent(this,inputPageNedan::class.java)
             startActivityForResult(inputPage,1)
-        }
-
-        //セレクトボタン関係
-        selectButton.setOnClickListener {
-
-            val dataStore: SharedPreferences = getSharedPreferences("DateStore", Context.MODE_PRIVATE)
-            val editor = dataStore.edit()
-            var checkBoxView = false
-
-
-            if(selectButton.text == "選択"){
-                selectButton.text = "保存"
-
-                checkBoxView = true
-
-                editor.putBoolean("checkBoxView",checkBoxView)
-                editor.putBoolean("sentakuDousa",true)
-                editor.apply()
-
-
-            }else{
-                checkBoxView = false
-
-                editor.putBoolean("checkBoxView",checkBoxView)
-                editor.apply()
-
-
-            }
-
-
-            /*====================ここのタイミングでアダプターを更新したい！！========================*/
-            adapter?.reView()
-            /*====================ここのタイミングでアダプターを更新したい！！========================*/
-
-            if(selectButton.text == "保存" && !checkBoxView){
-
-                editor.putBoolean("sentakuDousa",false)
-                editor.apply()
-                selectButton.text = "選択"
-
-            }
-
-
         }
 
 
@@ -261,14 +215,13 @@ class MainActivity : AppCompatActivity() {
             val resitoImage = person?.resitoImage ?:"eror"
 
             val Id = person?.Id ?:""
+            val buyName = person?.buyName ?:""
 
 
 
             //送られてきたデータを配列に梱包するところ。
-            nedanDateView.add(OkaneListDateSaveRealm(hizukeRealm,nedanRealm,R.drawable.image1,R.drawable.image1,saihuRealm,akaibuRealm,Id,resitoImage))
+            nedanDateView.add(OkaneListDateSaveRealm(hizukeRealm,nedanRealm,"",R.drawable.image1,saihuRealm,akaibuRealm,Id,resitoImage,"",buyName))
         }
-        println("===============================")
-        println()
 
 
 

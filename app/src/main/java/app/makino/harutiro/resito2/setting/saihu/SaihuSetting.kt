@@ -44,6 +44,7 @@ class SaihuSetting : AppCompatActivity() {
                     val dataStore: SharedPreferences = getSharedPreferences("DateStore", Context.MODE_PRIVATE)
                     val editor = dataStore.edit()
                     editor.putString("idGo",item.Id)
+                    editor.putString("uriGo",item.image.toString())
                     editor.apply()
                     finish()
 

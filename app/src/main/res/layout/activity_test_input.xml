@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E0F2F1"
     tools:context=".input.TestInput">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -59,7 +60,7 @@
         android:hint="サイフの入力"
         android:inputType="textMultiLine"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/akaibuSwichId"
+        app:layout_constraintBottom_toTopOf="@+id/buyNameTest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inNedanId" />
@@ -83,7 +84,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inSihuId" />
+        app:layout_constraintTop_toBottomOf="@+id/buyNameTest" />
 
     <ImageView
         android:id="@+id/resitoImageView"
@@ -93,5 +94,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <ImageView
+        android:id="@+id/saihuIcon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:layout_constraintBottom_toBottomOf="@+id/inSihuId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/inSihuId"
+        app:layout_constraintTop_toTopOf="@+id/inSihuId"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <EditText
+        android:id="@+id/buyNameTest"
+        android:layout_width="256dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="商品名"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/akaibuSwichId"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inSihuId" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
