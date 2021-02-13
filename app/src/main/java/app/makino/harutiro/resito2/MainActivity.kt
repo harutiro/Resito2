@@ -1,19 +1,16 @@
 package app.makino.harutiro.resito2
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -27,10 +24,10 @@ import app.makino.harutiro.resito2.input.TestInput
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import app.makino.harutiro.resito2.RecyclerViewAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -64,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.resycleView)
         val AllView = findViewById<Switch>(R.id.AllSwitchId)
         fabCamera = findViewById(R.id.fabCamera)
-
+        val selectButton = findViewById<Button>(R.id.selectButtonMain)
 
 
 
@@ -134,6 +131,49 @@ class MainActivity : AppCompatActivity() {
             val inputPage = Intent(this,inputPageNedan::class.java)
             startActivityForResult(inputPage,1)
         }
+
+        //セレクトボタン関係
+        selectButton.setOnClickListener {
+
+            val dataStore: SharedPreferences = getSharedPreferences("DateStore", Context.MODE_PRIVATE)
+            val editor = dataStore.edit()
+            var checkBoxView = false
+
+
+            if(selectButton.text == "選択"){
+                selectButton.text = "保存"
+
+                checkBoxView = true
+
+                editor.putBoolean("checkBoxView",checkBoxView)
+                editor.putBoolean("sentakuDousa",true)
+                editor.apply()
+
+
+            }else{
+                checkBoxView = false
+
+                editor.putBoolean("checkBoxView",checkBoxView)
+                editor.apply()
+
+
+            }
+
+
+            /*====================ここのタイミングでアダプターを更新したい！！========================*/
+            adapter?.reView()
+
+            if(selectButton.text == "保存" && !checkBoxView){
+
+                editor.putBoolean("sentakuDousa",false)
+                editor.apply()
+                selectButton.text = "選択"
+
+            }
+
+
+        }
+
 
         //============================権限関係======================================
 

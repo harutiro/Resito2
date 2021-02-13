@@ -15,7 +15,7 @@
         android:text="全表示"
         app:layout_constraintBottom_toTopOf="@+id/resycleView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/selectButtonMain"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -30,7 +30,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/selectButtonMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="選択"

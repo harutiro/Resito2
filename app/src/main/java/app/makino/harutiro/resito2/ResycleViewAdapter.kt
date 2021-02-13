@@ -1,18 +1,25 @@
 package app.makino.harutiro.resito2
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import io.realm.Realm
 
 class RecyclerViewAdapter(private val context: Context,private val listener: OnItemClickListner):
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+
+    private val realm by lazy {
+        Realm.getDefaultInstance()
+    }
 
     //リサイクラービューに表示するリストを宣言する
     val items: MutableList<OkaneListDateSaveRealm> = mutableListOf()
@@ -28,6 +35,7 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
         val saihuText: TextView = view.findViewById(R.id.saihuId)
         val nedanText: TextView = view.findViewById(R.id.nedanId)
         val resitoImageView:ImageView = view.findViewById(R.id.resitoImage)
+        val checkBox: CheckBox = view.findViewById(R.id.akaibuCheckBox)
     }
 
     //はめ込むものを指定
@@ -55,6 +63,35 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
         }else{
             holder.resitoImageView.setVisibility(View.GONE)
         }
+
+        //アーカイブチェックボックス
+        val dataStore: SharedPreferences = context.getSharedPreferences("DateStore", Context.MODE_PRIVATE)
+        val akaibu = dataStore.getBoolean("checkBoxView",false)
+        val sentakuDousua = dataStore.getBoolean("sentakuDousa",false)
+
+        var after = false
+
+        holder.checkBox.setVisibility(View.GONE)
+
+        if(sentakuDousua){
+            if(akaibu){
+                holder.checkBox.setVisibility(View.VISIBLE)
+                holder.checkBox.setChecked(item.akaibu)
+            }else{
+                holder.checkBox.setVisibility(View.GONE)
+                after = holder.checkBox.isChecked
+
+                val persons = realm.where(OkaneListDateSaveRealm::class.java).equalTo("Id",item.Id).findFirst()
+                realm.executeTransaction {
+                    persons?.akaibu = after
+
+                }
+
+
+            }
+
+        }
+
 
         //アーカイブの色変更
         if(item.akaibu) {
@@ -89,5 +126,9 @@ class RecyclerViewAdapter(private val context: Context,private val listener: OnI
     // RecyclerViewの要素をタップするためのもの
     interface OnItemClickListner{
         fun onItemClick(item: OkaneListDateSaveRealm)
+    }
+
+    fun reView(){
+        notifyDataSetChanged()
     }
 }
