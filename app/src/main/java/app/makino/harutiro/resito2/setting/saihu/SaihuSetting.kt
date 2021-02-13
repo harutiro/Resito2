@@ -1,6 +1,8 @@
 package app.makino.harutiro.resito2.setting.saihu
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -28,6 +30,8 @@ class SaihuSetting : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_saihu_setting)
 
+        val go = intent.getBooleanExtra("go",false)
+
 
 
 
@@ -35,12 +39,23 @@ class SaihuSetting : AppCompatActivity() {
 
         adapter = SettingRecycleViewAdapter(this,object: SettingRecycleViewAdapter.OnItemClickListner{
             override fun onItemClick(item: SaihuSettingListDateSaveRealm) {
-                // SecondActivityに遷移するためのIntent
-                val intent = Intent(applicationContext, SaihuInput::class.java)
-                // RecyclerViewの要素をタップするとintentによりSecondActivityに遷移する
-                // また，要素のidをSecondActivityに渡す
-                intent.putExtra("id", item.Id)
-                startActivity(intent)
+                var intent:Intent? = null
+                if(go) {
+                    val dataStore: SharedPreferences = getSharedPreferences("DateStore", Context.MODE_PRIVATE)
+                    val editor = dataStore.edit()
+                    editor.putString("idGo",item.Id)
+                    editor.apply()
+                    finish()
+
+                }else{
+                    // SecondActivityに遷移するためのIntent
+                    intent = Intent(applicationContext, SaihuInput::class.java)
+                    // RecyclerViewの要素をタップするとintentによりSecondActivityに遷移する
+                    // また，要素のidをSecondActivityに渡す
+                    intent.putExtra("id", item.Id)
+                    startActivity(intent)
+                }
+
             }
         })
         recycleView.layoutManager = LinearLayoutManager(this)

@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -27,7 +28,10 @@ import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
 import app.makino.harutiro.resito2.dousaMatome.DateDialog
 import app.makino.harutiro.resito2.dousaMatome.Henkan
+import app.makino.harutiro.resito2.setting.saihu.SaihuSetting
+import app.makino.harutiro.resito2.setting.saihu.SaihuSettingListDateSaveRealm
 import io.realm.Realm
+import io.realm.RealmResults
 import java.io.File
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -39,6 +43,8 @@ class TestInput : AppCompatActivity() {
     //インテントの戻るいちを指定
     val REQUEST_PICTURE = 2
     val REQUEST_EXTERNAL_STORAGE = 3
+
+    val SETTING_REOUEST = 100
 
     // idをonCreate()とonDestroy()で利用するため
     var id: String? = null
@@ -62,7 +68,7 @@ class TestInput : AppCompatActivity() {
     //findViewを外で使うところ
     var hizukeId:TextView? = null
     var nedanId:EditText? = null
-    var sihuId:EditText? = null
+    var sihuId:TextView? = null
     var resitoImageView:ImageView? = null
 
     @SuppressLint("ClickableViewAccessibility")
@@ -84,7 +90,7 @@ class TestInput : AppCompatActivity() {
 
         hizukeId = findViewById<TextView>(R.id.dayTextView)
         nedanId = findViewById<EditText>(R.id.inNedanId)
-        sihuId = findViewById<EditText>(R.id.inSihuId)
+        sihuId = findViewById(R.id.inSihuId)
         resitoImageView = findViewById(R.id.resitoImageView)
         val saveButtonId = findViewById<Button>(R.id.saveButton)
         val akaibuSwitch = findViewById<Switch>(R.id.akaibuSwichId)
@@ -95,6 +101,13 @@ class TestInput : AppCompatActivity() {
 
         //=====================================ボタン系の動作=======================================
 
+
+        sihuId?.setOnClickListener {
+            val settingIntent = Intent (this, SaihuSetting::class.java)
+            settingIntent.putExtra("go",true)
+            startActivityForResult(settingIntent,SETTING_REOUEST)
+
+        }
 
         akaibuSwitch.setOnCheckedChangeListener{ componundButton, isChecked ->
 
@@ -372,6 +385,18 @@ class TestInput : AppCompatActivity() {
                 resitoImageView?.isEnabled = grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val dataStore: SharedPreferences = getSharedPreferences("DateStore", Context.MODE_PRIVATE)
+        val id = dataStore.getString("idGo","NoDate")
+
+        val item: SaihuSettingListDateSaveRealm? = realm.where(SaihuSettingListDateSaveRealm::class.java).equalTo("Id",id).findFirst()
+        sihuId?.text = item?.name
+
+
     }
 
 
