@@ -30,6 +30,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import app.makino.harutiro.resito2.RecyclerViewAdapter
+import app.makino.harutiro.resito2.setting.saihu.SaihuSetting
 
 class MainActivity : AppCompatActivity() {
 
@@ -324,6 +325,8 @@ class MainActivity : AppCompatActivity() {
 
         when(item?.itemId){
             R.id.saihu_setting -> {
+                val settingPage = Intent (this, SaihuSetting::class.java)
+                startActivity(settingPage)
 
             }
             R.id.zyanru_setting -> {
