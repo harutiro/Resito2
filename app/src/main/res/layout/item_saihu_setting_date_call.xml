@@ -9,7 +9,7 @@
     android:paddingStart="16dp">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iconImageView"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="16dp"
@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nameTextView"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:background="@drawable/marukado"
@@ -29,6 +29,6 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/iconImageView"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

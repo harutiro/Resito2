@@ -17,8 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Resito2">
-        <activity android:name=".setting.saihu.SaihuSetting"></activity>
-        <!-- 追加部分 -->
+        <activity android:name=".setting.saihu.SaihuInput"></activity>
+        <activity android:name=".setting.saihu.SaihuSetting" /> <!-- 追加部分 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
