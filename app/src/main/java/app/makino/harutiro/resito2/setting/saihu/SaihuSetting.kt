@@ -3,13 +3,19 @@ package app.makino.harutiro.resito2.setting.saihu
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
 import app.makino.harutiro.resito2.RecyclerViewAdapter
+import app.makino.harutiro.resito2.dousaMatome.Henkan
 import app.makino.harutiro.resito2.input.TestInput
 import io.realm.Realm
 import io.realm.RealmResults
+import java.util.*
 
 class SaihuSetting : AppCompatActivity() {
 
@@ -21,6 +27,9 @@ class SaihuSetting : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_saihu_setting)
+
+
+
 
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.saihuSettingRecycleView)
 
@@ -40,14 +49,19 @@ class SaihuSetting : AppCompatActivity() {
         hyouzi()
 
 
+
+
+
     }
+
+
 
     fun hyouzi(){
 
         saihuDateView.clear()
 
         saihuDateView = mutableListOf(
-            SaihuSettingListDateSaveRealm("add","aaaa","add"),
+            SaihuSettingListDateSaveRealm("add","aaaa",null),
 
         )
 
@@ -66,5 +80,11 @@ class SaihuSetting : AppCompatActivity() {
 
         adapter?.setList(saihuDateView)
 
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+
+        hyouzi()
     }
 }

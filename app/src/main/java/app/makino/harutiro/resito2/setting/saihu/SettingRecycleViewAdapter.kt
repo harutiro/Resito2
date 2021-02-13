@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
@@ -34,7 +35,7 @@ class SettingRecycleViewAdapter (private val context: Context,private val listen
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        //holder.saihuIconImage.setImageResource()
+        holder.saihuIconImage.setImageURI(item.image.toUri())
         holder.nameTextView.text = item.name
         holder.container2.setOnClickListener { listener.onItemClick(item) }
     }

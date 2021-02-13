@@ -8,6 +8,6 @@ open class SaihuSettingListDateSaveRealm(
 
     open var name:String = "",
     open var image:String ="",
-    @PrimaryKey open var Id: String = UUID.randomUUID().toString()
+    @PrimaryKey open var Id: String? = UUID.randomUUID().toString()
 
     ):RealmObject()
