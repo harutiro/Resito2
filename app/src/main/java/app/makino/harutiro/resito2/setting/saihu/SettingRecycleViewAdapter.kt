@@ -12,7 +12,7 @@ import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
 import app.makino.harutiro.resito2.RecyclerViewAdapter
 
-class SettingRecycleViewAdapter (private val context: Context):
+class SettingRecycleViewAdapter (private val context: Context,private val listener: OnItemClickListner):
     RecyclerView.Adapter<SettingRecycleViewAdapter.ViewHolder>() {
 
     //リサイクラービューに表示するリストを宣言する
@@ -22,6 +22,7 @@ class SettingRecycleViewAdapter (private val context: Context):
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val saihuIconImage: ImageView = view.findViewById(R.id.iconImageView)
         val nameTextView: TextView = view.findViewById(R.id.nameTextView)
+        val container2:androidx.constraintlayout.widget.ConstraintLayout =view.findViewById(R.id.container2)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,6 +36,7 @@ class SettingRecycleViewAdapter (private val context: Context):
         val item = items[position]
         //holder.saihuIconImage.setImageResource()
         holder.nameTextView.text = item.name
+        holder.container2.setOnClickListener { listener.onItemClick(item) }
     }
 
     override fun getItemCount(): Int {
@@ -52,6 +54,11 @@ class SettingRecycleViewAdapter (private val context: Context):
         items.clear()
         items.addAll(list)
         notifyDataSetChanged()
+    }
+
+    // RecyclerViewの要素をタップするためのもの
+    interface OnItemClickListner{
+        fun onItemClick(item: SaihuSettingListDateSaveRealm)
     }
 
 }

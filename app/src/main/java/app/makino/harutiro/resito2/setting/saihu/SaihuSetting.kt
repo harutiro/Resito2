@@ -1,11 +1,13 @@
 package app.makino.harutiro.resito2.setting.saihu
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.makino.harutiro.resito2.OkaneListDateSaveRealm
 import app.makino.harutiro.resito2.R
 import app.makino.harutiro.resito2.RecyclerViewAdapter
+import app.makino.harutiro.resito2.input.TestInput
 import io.realm.Realm
 import io.realm.RealmResults
 
@@ -22,7 +24,16 @@ class SaihuSetting : AppCompatActivity() {
 
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.saihuSettingRecycleView)
 
-        adapter = SettingRecycleViewAdapter(this)
+        adapter = SettingRecycleViewAdapter(this,object: SettingRecycleViewAdapter.OnItemClickListner{
+            override fun onItemClick(item: SaihuSettingListDateSaveRealm) {
+                // SecondActivityに遷移するためのIntent
+                val intent = Intent(applicationContext, SaihuInput::class.java)
+                // RecyclerViewの要素をタップするとintentによりSecondActivityに遷移する
+                // また，要素のidをSecondActivityに渡す
+                intent.putExtra("id", item.Id)
+                startActivity(intent)
+            }
+        })
         recycleView.layoutManager = LinearLayoutManager(this)
         recycleView.adapter = adapter
 
@@ -36,10 +47,7 @@ class SaihuSetting : AppCompatActivity() {
         saihuDateView.clear()
 
         saihuDateView = mutableListOf(
-            SaihuSettingListDateSaveRealm("aaaa","aaaa"),
-            SaihuSettingListDateSaveRealm("aaaa","aaaa"),
-            SaihuSettingListDateSaveRealm("aaaa","aaaa"),
-            SaihuSettingListDateSaveRealm("aaaa","aaaa")
+            SaihuSettingListDateSaveRealm("add","aaaa","add"),
 
         )
 
@@ -51,8 +59,9 @@ class SaihuSetting : AppCompatActivity() {
         for(person in persons){
             val name = person.name
             val icon = person.image
+            val Id = person.Id
 
-            saihuDateView.add(SaihuSettingListDateSaveRealm(name,icon))
+            saihuDateView.add(SaihuSettingListDateSaveRealm(name,icon,Id))
         }
 
         adapter?.setList(saihuDateView)
