@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/saihu_setting"
+        android:title="@string/saihu_setting" />
+    <item
+        android:id="@+id/zyanru_setting"
+        android:title="@string/zyanru_setting" />
+    <item
+        android:id="@+id/kani_input_setting"
+        android:title="@string/kani_input_setting" />
+</menu>

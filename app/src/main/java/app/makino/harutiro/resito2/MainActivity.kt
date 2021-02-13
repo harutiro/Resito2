@@ -12,6 +12,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.Switch
@@ -310,4 +312,30 @@ class MainActivity : AppCompatActivity() {
         realm.close()
         super.onDestroy()
     }
+
+    //オプションボタン関係
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item?.itemId){
+            R.id.saihu_setting -> {
+
+            }
+            R.id.zyanru_setting -> {
+
+            }
+            R.id.kani_input_setting -> {
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+
 }
