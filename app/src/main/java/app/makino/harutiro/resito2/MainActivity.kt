@@ -162,6 +162,7 @@ class MainActivity : AppCompatActivity() {
 
             /*====================ここのタイミングでアダプターを更新したい！！========================*/
             adapter?.reView()
+            /*====================ここのタイミングでアダプターを更新したい！！========================*/
 
             if(selectButton.text == "保存" && !checkBoxView){
 
