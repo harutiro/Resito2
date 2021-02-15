@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import app.makino.harutiro.resito2.RecyclerViewAdapter
 import app.makino.harutiro.resito2.setting.saihu.SaihuSetting
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     //findViewById
     var fabCamera:View? = null
+    var constaraint:androidx.constraintlayout.widget.ConstraintLayout? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         val recycleView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.resycleView)
         val AllView = findViewById<Switch>(R.id.AllSwitchId)
         fabCamera = findViewById(R.id.fabCamera)
+        constaraint = findViewById(R.id.Contstaraint)
 
 
 
@@ -284,9 +287,10 @@ class MainActivity : AppCompatActivity() {
 
             }
             R.id.zyanru_setting -> {
-
+                constaraint?.let { Snackbar.make(it,"現在開発中です。( TДT)ｺﾞﾒﾝﾖｰ", Snackbar.LENGTH_SHORT).show() }
             }
             R.id.kani_input_setting -> {
+                constaraint?.let { Snackbar.make(it,"現在開発中です。( TДT)ｺﾞﾒﾝﾖｰ", Snackbar.LENGTH_SHORT).show() }
 
             }
         }
