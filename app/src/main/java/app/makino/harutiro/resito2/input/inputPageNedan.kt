@@ -11,6 +11,8 @@ import app.makino.harutiro.resito2.R
 
 class inputPageNedan : AppCompatActivity() {
 
+
+
     var firstNumber = 0.0
     var secondNumber = 0.0
     var totalNumber = 0.0
