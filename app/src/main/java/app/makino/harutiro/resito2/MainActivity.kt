@@ -217,10 +217,11 @@ class MainActivity : AppCompatActivity() {
             val Id = person?.Id ?:""
             val buyName = person?.buyName ?:""
 
+            val saihuIcon = person?.saihuIcon ?:""
 
 
             //送られてきたデータを配列に梱包するところ。
-            nedanDateView.add(OkaneListDateSaveRealm(hizukeRealm,nedanRealm,"",R.drawable.image1,saihuRealm,akaibuRealm,Id,resitoImage,"",buyName))
+            nedanDateView.add(OkaneListDateSaveRealm(hizukeRealm,nedanRealm,saihuIcon,R.drawable.image1,saihuRealm,akaibuRealm,Id,resitoImage,"",buyName))
         }
 
 

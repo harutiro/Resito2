@@ -414,6 +414,7 @@ class TestInput : AppCompatActivity() {
 
         if (uri != null) {
             saihuUriStaring = uri
+            saihuIcon?.setImageURI(uri.toUri())
         }
 
 
