@@ -13,7 +13,7 @@
         android:name=".RealmMemoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/ResiCame"
+        android:label="@string/ReceCame"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Resito2">
