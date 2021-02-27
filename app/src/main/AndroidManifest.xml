@@ -3,6 +3,9 @@
     package="app.makino.harutiro.resito2">
     <!-- パーミッション -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- カメラ関係 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACTION_OPEN_DOCUMENT" />
+
     <queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
@@ -18,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Resito2">
         <activity android:name=".setting.saihu.SaihuInput"></activity>
-        <activity android:name=".setting.saihu.SaihuSetting" /> <!-- 追加部分 -->
+        <activity android:name=".setting.saihu.SaihuSetting" />
+        <!-- 追加部分 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -27,7 +31,8 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_path" />
-        </provider> <!-- ここまで -->
+        </provider>
+        <!-- ここまで -->
         <activity android:name=".input.inputPageNedan" />
         <activity android:name=".input.TestInput" />
         <activity android:name=".MainActivity">
